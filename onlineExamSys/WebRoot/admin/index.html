@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>通用在线考试系统后台管理系统</title>
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css"/>    
+    <link rel="stylesheet" type="text/css" href="css/table.css" />
+    <script type="text/javascript" src="easyui/jquery.min.js" ></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js" ></script>
+    <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js" ></script>    
+    <script type="text/javascript" src="js/common.js" ></script>
+    <script type="text/javascript" src="js/init.js"></script>    
+    <script type="text/javascript" src="js/jquery.form.js"></script>
+</head>
+<body class="easyui-layout">
+
+    <div data-options="region:'north',border:false" style="height: 60px; background: url(../download/logo.png) no-repeat #B3DFDA ; padding: 10px; font-size: 24px">
+        
+        <div style="position: absolute; right: 5px; top: 10px;" id="div_welcome">
+           
+        </div>
+        <div style="position: absolute; right: 0px; bottom: 0px;">
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+                data-options="plain:true,iconCls:'icon-boss'" onclick="searchMyInfo();">我的信息</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+                data-options="plain:true,iconCls:'icon-set'" onclick="changePwd();">修改密码</a>
+            <a href="javascript:void(0);" class="easyui-linkbutton"
+                data-options="plain:true,iconCls:'icon-stop'" onclick="loginOut();">退出系统</a>
+        </div>
+    </div>
+    <div data-options="region:'west',split:true,title:'功能导航'" style="width: 180px; padding: 10px;">
+        <div>
+            <ul id="treeLeft">
+            	<li onclick="addTab('试题管理','paper.html','icon-add')">试题管理</li>
+            	<li onclick="addTab('教师管理','teacher.html','icon-add')">教师管理</li>
+            </ul>
+        </div>
+    </div>
+    <div data-options="region:'center'">
+        <div id="tabs" class="easyui-tabs" data-options="
+                    border:false,
+                    fit:true,
+                    tools:[
+                    {iconCls : 'icon-refresh',text:'刷新',handler:refreshTab},
+                    {iconCls : 'icon-delete3',text:'关闭全部',handler:closeTab}
+                    ]">
+        </div>
+    </div>
+</body>
+</html>
