@@ -10,14 +10,14 @@ import java.util.Set;
  * course entity. @author MyEclipse Persistence Tools
  */
 
-public class course  implements java.io.Serializable {
+public class Course  implements java.io.Serializable {
 
 
     // Fields    
 
      private Integer id;
-     private int teacherid ;
-     private int departmentid ;
+     private Integer teacherid ;
+     private Integer departmentid ;
      private String code;
      private String name;
      private String remark;
@@ -30,18 +30,18 @@ public class course  implements java.io.Serializable {
     // Constructors
 
     /** default constructor */
-    public course() {
+    public Course() {
     }
 
 	/** minimal constructor */
-    public course(Integer id, String code, String name) {
+    public Course(Integer id, String code, String name) {
         this.id = id;
         this.code = code;
         this.name = name;
     }
     
     /** full constructor */
-    public course(Integer id, int teacherid , int departmentid , String code, String name, String remark, Integer courseStatus, Set courseUnits, Set questions, Set examStrategies) {
+    public Course(Integer id, int teacherid , int departmentid , String code, String name, String remark, Integer courseStatus, Set courseUnits, Set questions, Set examStrategies) {
         this.id = id;
         this.teacherid = teacherid;
         this.departmentid = departmentid;
@@ -65,20 +65,20 @@ public class course  implements java.io.Serializable {
         this.id = id;
     }
 
-    public int getTeacher() {
+    public Integer getTeacherid() {
         return this.teacherid;
     }
     
-    public void setTeacher(int teacher) {
-        this.teacherid = teacher;
+    public void setTeacherid(Integer teacherid) {
+        this.teacherid = teacherid;
     }
 
-    public int getDepartment() {
+    public Integer getDepartmentid() {
         return this.departmentid;
     }
     
-    public void setDepartment(int department) {
-        this.departmentid = department;
+    public void setDepartmentid(Integer departmentid) {
+        this.departmentid = departmentid;
     }
 
     public String getCode() {
