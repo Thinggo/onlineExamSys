@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>通用在线考试系统后台管理系统22</title>
+    <title>通用在线考试系统后台管理系统</title>
     <link rel="shortcut icon" type="image/ico" href="images/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
     <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css"/>    
@@ -33,6 +33,7 @@
     <div data-options="region:'west',split:true,title:'功能导航'" style="width: 180px; padding: 10px;">
         <div>
             <ul id="treeLeft">
+            	<li onclick="addTab('课程管理','course.jsp','icon-add')">试题管理</li>
             	<li onclick="addTab('试题管理','paper.html','icon-add')">试题管理</li>
             	<li onclick="addTab('教师管理','teacher.html','icon-add')">教师管理</li>
             </ul>
