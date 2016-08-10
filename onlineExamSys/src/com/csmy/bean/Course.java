@@ -17,15 +17,31 @@ public class Course  implements java.io.Serializable {
 
      private Integer id;
      private Integer teacherid ;
+     public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	private String  teacherName ;
      private Integer departmentid ;
+     private String  deptName;
+
      private String code;
      private String name;
      private String remark;
      private Integer courseStatus;
-     private Set courseUnits = new HashSet(0);
-     private Set questions = new HashSet(0);
-     private Set examStrategies = new HashSet(0);
-
+     
 
     // Constructors
 
@@ -49,9 +65,7 @@ public class Course  implements java.io.Serializable {
         this.name = name;
         this.remark = remark;
         this.courseStatus = courseStatus;
-        this.courseUnits = courseUnits;
-        this.questions = questions;
-        this.examStrategies = examStrategies;
+        
     }
 
    
@@ -111,38 +125,5 @@ public class Course  implements java.io.Serializable {
     
     public void setCourseStatus(Integer courseStatus) {
         this.courseStatus = courseStatus;
-    }
-
-    public Set getCourseUnits() {
-        return this.courseUnits;
-    }
-    
-    public void setCourseUnits(Set courseUnits) {
-        this.courseUnits = courseUnits;
-    }
-
-    public Set getQuestions() {
-        return this.questions;
-    }
-    
-    public void setQuestions(Set questions) {
-        this.questions = questions;
-    }
-
-    public Set getExamStrategies() {
-        return this.examStrategies;
-    }
-    
-    public void setExamStrategies(Set examStrategies) {
-        this.examStrategies = examStrategies;
-    }
-   
-
-
-
-
-
-
-
-
+    }   
 }

@@ -4,8 +4,7 @@ import java.util.List;
 
 public class PagerModel<E> {
 	private int total;
-	private List<E> rows;
-	
+	private List<E> rows;	
 	
 	public PagerModel(int total, List<E> rows){
 		this.total = total;

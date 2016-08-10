@@ -9,10 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import com.csmy.bean.Teacher;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Utils {
+	
+	private final static String CURRENT_USER_KEY="ONLINE_EXAM_CURRENT_USER_KEY";
+	public static Teacher getCurrentUser(HttpServletRequest request){
+		Teacher user = (Teacher) request.getSession().getAttribute(CURRENT_USER_KEY);
+		if(user==null) user = new Teacher();
+		return user;
+	}
+	
+	public static void setCurrentUser(HttpServletRequest request,Teacher user){
+		request.getSession().setAttribute(CURRENT_USER_KEY,user);
+	}
+	
 	public static <T> T formToBean(HttpServletRequest request, Class<T> beanClass) {  
         try {  
             // 创建封装数据的bean  

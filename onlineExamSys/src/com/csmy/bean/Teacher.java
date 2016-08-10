@@ -34,6 +34,9 @@ public class Teacher  implements java.io.Serializable {
 
     /** default constructor */
     public Teacher() {
+    	id = 1;
+    	name = "刘勇";
+    	deptId = 1;
     }
 
 	/** minimal constructor */

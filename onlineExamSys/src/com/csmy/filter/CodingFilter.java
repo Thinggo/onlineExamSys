@@ -27,6 +27,7 @@ public class CodingFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest)req;
 		HttpServletResponse response = (HttpServletResponse)resp;
 		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/plain");
 		response.setCharacterEncoding("utf-8");
 		chain.doFilter(request, response);
 

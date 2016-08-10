@@ -1,6 +1,6 @@
 package com.csmy.bean;
 
-
+import com.google.gson.annotations.SerializedName;
 
 /**
  * QuestionType entity. @author MyEclipse Persistence Tools
@@ -10,8 +10,9 @@ public class QuestionType  implements java.io.Serializable {
 
 
     // Fields    
-
+	@SerializedName(value = "id")
      private Integer typeId;
+	@SerializedName(value = "text")
      private String typeName;
      private Byte isObjective;
      private String remark;
