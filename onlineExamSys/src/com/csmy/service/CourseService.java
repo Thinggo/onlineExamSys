@@ -26,15 +26,12 @@ public class CourseService {
 		courseDao.audit(ids, status);
 	}
 	
-	public List<Course> list(int pageSize, int pageIndex,int userDeptId) throws Exception{
-		return courseDao.list(pageSize, pageIndex, userDeptId);
+	public List<Course> list(int uid) throws Exception{
+		return courseDao.select("1=1");
 	}
 	
-	public PagerModel<Course> list2(int deptid, int pageSize, int pageIndex) throws Exception{
-		return courseDao.list2(deptid, pageSize, pageIndex);
-	}
 	
-	public PagerModel<Course> list(int uid, String order,int pageSize, int pageIndex, String where) throws Exception{
+	public PagerModel<Course> search(int uid, String order,int pageSize, int pageIndex, String where) throws Exception{
 		return courseDao.list(uid, order, pageSize, pageIndex, where);
 	}		
 }

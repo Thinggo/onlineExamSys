@@ -45,8 +45,8 @@ public class CourseServlet extends HttpServlet {
 			audit(req,resp);
 		}else if("list".equals(action)){
 			list(req,resp);
-		}else if("listUnit".equals(action)){
-			listUnit(req,resp);
+		}else if("unitList".equals(action)){
+			unitList(req,resp);
 		}else{
 			listEx(req,resp);
 		}
@@ -54,7 +54,7 @@ public class CourseServlet extends HttpServlet {
 
 	
 
-	private void listUnit(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	private void unitList(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		PrintWriter out = resp.getWriter();
 		out.println("[]");
 		out.flush();		
@@ -83,7 +83,7 @@ public class CourseServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		try {						
 			Teacher user = Utils.getCurrentUser(req);
-			list = courseService.list(Integer.MAX_VALUE, 1,user.getDeptId());
+			list = courseService.list(user.getDeptId());
 			String json = Utils.toJson(list);
 			out.println(json);
 		} catch (Exception e) {			
@@ -99,8 +99,7 @@ public class CourseServlet extends HttpServlet {
 		try {			
 			PagerModel2 pm2 = Utils.formToBean(req, PagerModel2.class);
 			Teacher user = Utils.getCurrentUser(req);
-			//pm = courseDao.list(user.getId(),pm2.getSort()+" "+pm2.getOrder(), pm2.getPageSize(), pm2.getPageIndex(), pm2.getWhere());
-			pm = courseService.list2(user.getDeptId(), pm2.getPageSize(), pm2.getPageIndex());
+			pm = courseService.search(user.getId(),pm2.getSort()+" "+pm2.getOrder(), pm2.getPageSize(), pm2.getPageIndex(), pm2.getWhere());			
 			String json = Utils.toJson(pm);
 			out.println(json);
 		} catch (Exception e) {			

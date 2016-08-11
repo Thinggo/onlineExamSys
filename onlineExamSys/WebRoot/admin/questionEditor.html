@@ -74,9 +74,9 @@
 			$('#ui_question_answer_div').append(answer);
 		}else if(currentType==3){	//判断			
 			$('#ui_question_answer_div').empty();
-			var answer='<span id="span_question_answer1"><input type="radio" value="1" name="ui_question_answer" id="ui_question_answer1"/>正确 </span>';
+			var answer='<span id="span_question_answer1"><input type="radio" value="0" name="ui_question_answer" id="ui_question_answer1"/>错误 </span>';
 			$('#ui_question_answer_div').append(answer);
-			    answer='<span id="span_question_answer2"><input type="radio" value="2" name="ui_question_answer" id="ui_question_answer2"/>错误 </span>';			
+			    answer='<span id="span_question_answer2"><input type="radio" value="1" name="ui_question_answer" id="ui_question_answer2"/>正确</span>';			
 			$('#ui_question_answer_div').append(answer);
 		}else if(currentType==4){	//填空
 			
@@ -89,7 +89,6 @@
 				iconCls:'icon-search'
 			});		
 		}
-			
 	}
 	
 	function ui_question_option_delete(){			
@@ -98,41 +97,72 @@
 		$('#hiddenOption'+i).remove();
 		$('#span_question_answer'+i).remove();
 	}
-	function ui_question_option_init(questionType){		
-		if(currentType==questionType) return;	
-		if(currentType>=5){
-			$('#hiddenAnswer').remove();
-			$('#btn_question_answer').remove();
-		}
-		currentType=questionType;
-		$('#ui_question_answer_div').empty();
-		$('[name=btn_question_option]').remove();
-		$('[name=hiddenOption]').remove();
-		
-		
-		if(questionType == 1 || questionType == 2 ){	//单、多选择题
-			$('#btn_question_option_add').show();
-			$('#btn_question_option_delete').show();
-			for(var i=1;i<=4;i++){
+	//初始化选项
+	function ui_question_option_init(questionType, question){		
+		if(currentType!=questionType || question){					
+			if(currentType>=5){
+				$('#hiddenAnswer').remove();
+				$('#btn_question_answer').remove();
+			}
+			currentType=questionType;
+			$('#ui_question_answer_div').empty();
+			$('[name=btn_question_option]').remove();
+			$('[name=hiddenOption]').remove();
+			
+			
+			if(questionType == 1 || questionType == 2 ){	//单、多选择题
+				$('#btn_question_option_add').show();
+				$('#btn_question_option_delete').show();
+				var cnt = 4;
+				if(question) cnt = question.list.length;
+				for(var i=1;i<=cnt;i++){
+					ui_question_option_add();
+				}
+			}else if(questionType==3){ //判断题
+				$('#btn_question_option_add').hide();
+				$('#btn_question_option_delete').hide();
+				ui_question_option_add();
+				
+			}else if(questionType==4){ //填空题
+				$('#btn_question_option_add').hide();
+				$('#btn_question_option_delete').hide();
+			}else{			
+				$('#btn_question_option_add').hide();
+				$('#btn_question_option_delete').hide();
 				ui_question_option_add();
 			}
-		}else if(questionType==3){ //判断题
-			$('#btn_question_option_add').hide();
-			$('#btn_question_option_delete').hide();
-			ui_question_option_add();
-			
-		}else if(questionType==4){ //填空题
-			$('#btn_question_option_add').hide();
-			$('#btn_question_option_delete').hide();
-		}else{			
-			$('#btn_question_option_add').hide();
-			$('#btn_question_option_delete').hide();
-			ui_question_option_add();
 		}
+		//填充初值
+		if(!question) return ;
+		$('#btn_question_option_add').hide();
+		$('#btn_question_option_delete').hide();
+		if(questionType<=2){	//选择题
+			var options = question.list;
+			for(var i=1;i<=options.length;i++){
+				var option = options[i-1];
+				$('#hiddenOption'+i).val(option.name);
+				$('#hiddenOption'+i).attr("oid",option.id);
+				if(option.isRight==1){
+					$("#ui_question_answer"+i).attr("checked",true);
+				}
+			}
+		}else if(questionType==3){
+			if(question.answer==1){
+				$("#ui_question_answer2").attr("checked",true);
+			}else{
+				$("#ui_question_answer1").attr("checked",true);
+			}
+		}else if(questionType==4){ //填空题
+			
+		}else{			
+			$('#hiddenAnswer').val(question.answer);
+		} 
+		return;	
 	}
 
 </script>
 <div style="padding:20px">
+<form id="ui_question_"></form>
 	<table style="width:100%">
 		<tr><td>课程:</td><td><input id="ui_question_course" name="courseId"  /></td>
 			<td>单元:</td><td><input id="ui_question_course_unit" name="courseunitId" /></td>
@@ -153,7 +183,7 @@
 	</table>
 	<div id="ui_exam_editor"></div>
 	<div>
-		
+		<input type="hidden" value="" id="hiddenQuestionId"/>
 		<input type="hidden" value="" id="hiddenQuestion"/>
 		<input type="hidden" value="" id="hiddenExplain"/>
 		<input type="hidden" name="hiddenOption" value="" id="hiddenOption1"/>

@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
 <script type="text/javascript">
 	var modurl = "courseServlet.do";
     $(function () {
@@ -67,7 +65,7 @@
     function ui_course_add() {
         $("<div/>").dialog({
             id: "ui_course_add_dialog",
-            href: "courseEdit.jsp",
+            href: "courseEdit.html",
             title: "新增课程",
             iconCls:"icon-add",
             height: 400,
@@ -127,7 +125,7 @@
         }
         $("<div/>").dialog({
             id: "ui_course_edit_dialog",
-            href: "courseEdit.jsp",
+            href: "courseEdit.html",
             title: "修改课程",
             iconCls: "icon-edit",
             height:400,

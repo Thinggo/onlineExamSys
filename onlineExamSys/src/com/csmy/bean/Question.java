@@ -1,6 +1,7 @@
 package com.csmy.bean;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -15,14 +16,19 @@ public class Question  implements java.io.Serializable {
      private Integer id;
      private String title;
      private Integer courseId;
+     private String  courseName;
      private Integer courseunitId;
+     private String  nuitName;
      private Integer typeId;
+     private String  typeName;
      private Integer deleteFlag;
      private String answer;
      private Integer defficulty;
      private String explanin;
      private Integer teacherId;
+     private String  teacherNmae;
      private Date createDate;
+     private List<QuestionOption> list;
 
 
     // Constructors
@@ -144,13 +150,47 @@ public class Question  implements java.io.Serializable {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public String getNuitName() {
+		return nuitName;
+	}
+
+	public void setNuitName(String nuitName) {
+		this.nuitName = nuitName;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public String getTeacherNmae() {
+		return teacherNmae;
+	}
+
+	public void setTeacherNmae(String teacherNmae) {
+		this.teacherNmae = teacherNmae;
+	}
+
+	public List<QuestionOption> getList() {
+		return list;
+	}
+
+	public void setList(List<QuestionOption> list) {
+		this.list = list;
+	}
    
-
-
-
-
-
-
 
 
 }

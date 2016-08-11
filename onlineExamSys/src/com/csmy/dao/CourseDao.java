@@ -12,6 +12,20 @@ import java.util.List;
 import com.csmy.bean.*;
 import com.csmy.db.*;
 public class CourseDao {
+	private String column="id"
+			+ " ,code"
+			+ " ,name"
+			+ " ,deptId"
+			+ " ,dbo.getdeptNameByid(deptId) deptName"
+			+ " ,teacherId"
+			+ " ,dbo.getTeacherByid(teacherId) teacherName"
+			+ " ,remark"
+			+ " ,courseStatus";
+	/**
+	 * 课程插入
+	 * @param c 为课程对象
+	 * @throws SQLException
+	 */
 	public void insert(Course c) throws SQLException{
         Connection conn = DbConn.getDbConn();		
 		String sql="insert into course(code,name,deptId,teacherId,remark)"
@@ -105,10 +119,10 @@ public class CourseDao {
 		}			
 	}
 	
-	public List<Course> list(int pageSize, int pageIndex,int userDeptId) throws SQLException{
+	/*public List<Course> list(int pageSize, int pageIndex,int userDeptId) throws SQLException{
 		List<Course> list =new ArrayList<Course>();
 		  Connection conn = DbConn.getDbConn();
-		  /*
+		  
 		   * 分页算法（SQL SERVER）
 		   * 假设页大小为m条记录，查询第n页。
 		   *SELECT TOP  m  字段列表   FROM <table> WHERE <条件> and id not IN (
@@ -116,7 +130,7 @@ public class CourseDao {
            WHERE <条件>  ORDER BY id  )  
            ORDER BY id 
              -–id为主键
-		   */		 
+		   		 
 		  
 		   int num=(pageIndex-1)*pageSize;
 		  String sql ="select top "+pageSize+" c.id,c.code,c.name,c.deptid,d.name,"
@@ -181,13 +195,15 @@ public class CourseDao {
 			List<Course> list = list(pageSize,pageIndex,deptid);
 			PagerModel<Course> pm = new PagerModel<Course>(total, list);
 			return pm;
-	}
+	}*/
 	public PagerModel<Course> list(int uid, String order,int pageSize, int pageIndex, String where) throws SQLException{
 		
 		Connection conn = DbConn.getDbConn();
 		List<Course> list = new ArrayList<Course>();
 		CallableStatement pstm;
-		pstm = conn.prepareCall("{call sp_Pager('Course',' id,code,name,deptId,teacherId,remark,courseStatus ',?,?,?,?,?)}");  
+		pstm = conn.prepareCall("{call sp_Pager('Course',' "
+				+ column
+				+ " ',?,?,?,?,?)}");  
 		pstm.setString(1, order);
 		pstm.setInt(2, pageSize);
 		pstm.setInt(3, pageIndex);
@@ -200,15 +216,49 @@ public class CourseDao {
 			while(rs.next()){
 				Course c = new Course(rs.getInt(1),rs.getString(2),rs.getString(3));
 				c.setDepartmentid(rs.getInt(4));
-				c.setTeacherid(rs.getInt(5));
-				c.setRemark(rs.getString("remark"));
-				c.setCourseStatus(rs.getInt(7));
+				c.setDeptName(rs.getString(5));
+				
+				c.setTeacherid(rs.getInt(6));
+				c.setTeacherName(rs.getString(7));
+				c.setRemark(rs.getString(8));
+				c.setCourseStatus(rs.getInt(9));
 				list.add(c);				
 			}
 			total = pstm.getInt(5);
+			rs.close();
 		}
+		
+		 DbConn.closeConn(conn);
 		PagerModel<Course> pm = new PagerModel<Course>(total, list);
 		return pm;
 		
 	}
+	
+	public List<Course>  select(String where) throws SQLException{
+	    if(where ==null) where="1=1";
+	    List<Course> list=null;
+		Connection conn = DbConn.getDbConn();
+		
+		String  sql=String.format("select " +column+ " from course where %s",where);
+		if(conn!=null){
+			 list = new ArrayList<Course>();
+			 PreparedStatement pstm = conn.prepareStatement(sql);
+			 ResultSet rs=pstm.executeQuery();				 
+			 while(rs.next()){
+				 Course c = new Course(rs.getInt(1),rs.getString(2),rs.getString(3));
+					c.setDepartmentid(rs.getInt(4));
+					c.setDeptName(rs.getString(5));
+					
+					c.setTeacherid(rs.getInt(6));
+					c.setTeacherName(rs.getString(7));
+					c.setRemark(rs.getString(8));
+					c.setCourseStatus(rs.getInt(9));
+					list.add(c);
+			 }
+			 rs.close();
+			 DbConn.closeConn(conn);
+		}
+		
+	return list;	
+} 
 }

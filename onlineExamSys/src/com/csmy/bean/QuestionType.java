@@ -9,10 +9,8 @@ import com.google.gson.annotations.SerializedName;
 public class QuestionType  implements java.io.Serializable {
 
 
-    // Fields    
-	@SerializedName(value = "id")
+    // Fields    	
      private Integer typeId;
-	@SerializedName(value = "text")
      private String typeName;
      private Byte isObjective;
      private String remark;
