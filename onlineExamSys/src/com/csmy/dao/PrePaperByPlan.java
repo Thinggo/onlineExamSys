@@ -34,19 +34,7 @@ public class PrePaperByPlan {
 		 
 	}
 	
-	 public static void main(String[] args){
-    	 PrePaperByPlan  o=new PrePaperByPlan(1);
-    	 
-    	 try {
-			o.makeAllPaper();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-     }
+	 
 	
 	public void  makeAllPaper() throws Exception{
 		try {
