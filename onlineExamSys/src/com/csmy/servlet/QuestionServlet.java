@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.csmy.bean.QuestionType;
 import com.csmy.dao.QuestionDao;
+import com.csmy.service.QuestionService;
 
 /**
  * Servlet implementation class QuestionServlet
@@ -19,7 +20,7 @@ import com.csmy.dao.QuestionDao;
 @WebServlet("/admin/questionServlet.do")
 public class QuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private QuestionDao questionDao = new QuestionDao();
+	private QuestionService questionService = new QuestionService();
 	private PrintWriter out = null;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +39,7 @@ public class QuestionServlet extends HttpServlet {
 		List<QuestionType> list = null;
 		String json = "[]";
 		try {
-			list = questionDao.questionTypeList();
+			list = questionService.questionTypeList();
 			json = Utils.toJson(list);
 		} catch (Exception e) {			
 			e.printStackTrace();

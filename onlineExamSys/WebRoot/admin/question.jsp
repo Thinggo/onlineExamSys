@@ -231,9 +231,12 @@
             }],
             onLoad: function () {            
             	ui_question_init_editor();
-            	UE.getEditor('ui_exam_editor');              	
+            	var ue = UE.getEditor('ui_exam_editor');              	
             	$('#btn_question_question').linkbutton({iconCls:"icon-edit"});    
             	$('#ui_question_questionType').combobox('setValue',1);
+            	ue.addListener("ready", function () {                    
+                    ue.setContent("ok");
+          		});
             	
             },
             onClose: function () {

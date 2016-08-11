@@ -16,12 +16,11 @@ import com.csmy.bean.PagerModel;
 import com.csmy.bean.PagerModel2;
 import com.csmy.bean.ResultModel;
 import com.csmy.bean.Teacher;
-import com.csmy.dao.CourseDao;
-import com.sun.xml.internal.fastinfoset.stax.events.Util;
+import com.csmy.service.CourseService;
 @WebServlet("/admin/courseServlet.do")
 public class CourseServlet extends HttpServlet {
 	
-	private CourseDao courseDao = new CourseDao();
+	private CourseService courseService = new CourseService();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -66,10 +65,10 @@ public class CourseServlet extends HttpServlet {
 		String ids = req.getParameter("ids");
 		String json = null;
 		try {
-			courseDao.audit(ids, 2);
+			courseService.audit(ids, 2);
 			ResultModel rm = new ResultModel(0,"审核成功！");
 			json = Utils.toJson(rm);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			ResultModel rm = new ResultModel(1,"审核失败！");
 			json = Utils.toJson(rm);	
 			e.printStackTrace();
@@ -84,7 +83,7 @@ public class CourseServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		try {						
 			Teacher user = Utils.getCurrentUser(req);
-			list = courseDao.list(Integer.MAX_VALUE, 1,user.getDeptId());
+			list = courseService.list(Integer.MAX_VALUE, 1,user.getDeptId());
 			String json = Utils.toJson(list);
 			out.println(json);
 		} catch (Exception e) {			
@@ -101,7 +100,7 @@ public class CourseServlet extends HttpServlet {
 			PagerModel2 pm2 = Utils.formToBean(req, PagerModel2.class);
 			Teacher user = Utils.getCurrentUser(req);
 			//pm = courseDao.list(user.getId(),pm2.getSort()+" "+pm2.getOrder(), pm2.getPageSize(), pm2.getPageIndex(), pm2.getWhere());
-			pm = courseDao.list2(user.getDeptId(), pm2.getPageSize(), pm2.getPageIndex());
+			pm = courseService.list2(user.getDeptId(), pm2.getPageSize(), pm2.getPageIndex());
 			String json = Utils.toJson(pm);
 			out.println(json);
 		} catch (Exception e) {			
@@ -122,10 +121,10 @@ public class CourseServlet extends HttpServlet {
 		String ids = req.getParameter("ids");
 		String json = null;
 		try {
-			courseDao.delete(ids);
+			courseService.delete(ids);
 			ResultModel rm = new ResultModel(0,"删除成功！");
 			json = Utils.toJson(rm);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			ResultModel rm = new ResultModel(1,"修改失败！");
 			json = Utils.toJson(rm);	
 			e.printStackTrace();
@@ -143,7 +142,7 @@ public class CourseServlet extends HttpServlet {
 			Teacher currentUser = Utils.getCurrentUser(req);
 			c.setTeacherid(currentUser.getId());
 			c.setDepartmentid(currentUser.getDeptId());
-			courseDao.update(c);
+			courseService.update(c);
 			ResultModel rm = new ResultModel(0,"修改成功！");
 			json = Utils.toJson(rm);
 			
@@ -165,7 +164,7 @@ public class CourseServlet extends HttpServlet {
 			Teacher currentUser = Utils.getCurrentUser(req);
 			c.setTeacherid(currentUser.getId());
 			c.setDepartmentid(currentUser.getDeptId());
-			courseDao.insert(c);
+			courseService.insert(c);
 			ResultModel rm = new ResultModel(0,"添加成功！");
 			json = Utils.toJson(rm);
 			
