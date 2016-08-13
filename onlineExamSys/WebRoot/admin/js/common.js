@@ -134,7 +134,7 @@ stringToList = function (value) {
  * fnLoad:对话框加载后执行的函数
  * 
  */
-ui_dg_add_edit = function(title,modname,url,html,action,w,h,fnSuccess,fnLoad) {
+ui_dg_add_edit = function(title,modname,submiturl,html,action,w,h,fnSuccess,fnLoad,fnValidate) {
     $("<div/>").dialog({
         id: modname+"_add_dialog",
         href: html,
@@ -149,18 +149,24 @@ ui_dg_add_edit = function(title,modname,url,html,action,w,h,fnSuccess,fnLoad) {
             text: action=='add'?'添 加':'修改',
             handler: function () {
                 $("#"+modname+"_editform").form("submit", {
-                    url: url,
+                    url: submiturl,
                     onSubmit: function (param) {
                         $('#'+modname+'_add_btn').linkbutton('disable');    //点击就禁用按钮，防止连击
                         param.action = action;
-                        if ($(this).form('validate'))
-                            return true;
+                        if ($(this).form('validate')){
+                        	var f = true;
+                        	if(fnValidate) f = fnValidate();
+                        	if(!f){
+                        		$('#'+modname+'_add_btn').linkbutton('enable');   //恢复按钮
+                        	}
+                        	return f;
+                        }
                         else {
                             $('#'+modname+'_add_btn').linkbutton('enable');   //恢复按钮
                             return false;
                         }
                     },
-                    success: function (data) {
+                    success: function (data) {                    	
                         var dataJson = eval('(' + data + ')');    //转成json格式
                         if (dataJson.success) {
                             $("#"+modname+"_add_dialog").dialog('destroy');  //销毁dialog对象

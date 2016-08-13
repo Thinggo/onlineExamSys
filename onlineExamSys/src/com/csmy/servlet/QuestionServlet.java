@@ -34,9 +34,31 @@ public class QuestionServlet extends BaseServlet {
 		String action = req.getParameter("action");
 		if("questionType".equals(action)){
 			questionTypeList(req,resp);
+		}else if("getQuestionQty".equals(action)){
+			getQuestionQty(req,resp);
 		}else{
 			doNothing(req, resp);
 		}
+	}
+	private void getQuestionQty(HttpServletRequest req, HttpServletResponse resp) {
+		PrintWriter out = null;
+		
+		try{
+			String courseId = req.getParameter("courseId");
+			String courseunitId = req.getParameter("courseunitId");
+			String questionTypeId = req.getParameter("questionTypeId");
+			String difficulty = req.getParameter("difficulty");
+			out = resp.getWriter();
+			int cnt = questionService.getQuestionQty(courseId,courseunitId,questionTypeId,difficulty);
+			ResultModel rm = new ResultModel(0, cnt + "");
+			String json = Utils.toJson(rm);
+			out.println(json);
+		}catch(Exception ex){
+			ResultModel rm = new ResultModel(1,"【失败】");
+			String json = Utils.toJson(rm);
+			out.println(json);
+		}
+		out.flush();
 	}
 	/**
 	 * 获取全部习题类型列表

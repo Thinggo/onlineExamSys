@@ -60,7 +60,7 @@ public class CourseDao {
 	public void update(Course c) throws SQLException{
 		Connection conn = DbConn.getDbConn();		
 		String sql="update  course"
-				+ " set code=?,name=?,deptId=?,teacherId=?,remark=?"
+				+ " set code=?,name=?,deptId=?,teacherId=?,remark=?,courseStatus=?"
 				+ " where id=?";
 		if (conn!=null){
 			PreparedStatement pstm = conn.prepareStatement(sql);
@@ -84,7 +84,10 @@ public class CourseDao {
 			}else{
 				pstm.setString(5, c.getRemark());
 			}
-			pstm.setInt(6, c.getId());
+			
+			pstm.setInt(6, c.getCourseStatus());
+			
+			pstm.setInt(7, c.getId());
 			pstm.executeUpdate();
 			DbConn.closeConn(conn);
 		} 

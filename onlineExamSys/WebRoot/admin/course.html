@@ -63,7 +63,7 @@
     }
     //添加
     function ui_course_add() {
-    	ui_dg_add_edit('添加课程','ui_course','courseServlet.do','courseEdit.html','add',460,400);  
+    	ui_dg_add_edit('添加课程','ui_course','courseServlet.do','courseEdit.html','add',460,300);  
     }
     //修改课程
     function ui_course_edit() {
@@ -74,12 +74,13 @@
             return;
         }
         var row = rows[0];
+        /*
         if(row['courseStatus'] >= 2){
         	$.show_warning("提示", "课程已经审核通过，不能再修改！");
         	return;
         }
-        
-        ui_dg_add_edit('修改课程','ui_course','courseServlet.do','courseEdit.html','edit',460,400,null,function(){
+        */
+        ui_dg_add_edit('修改课程','ui_course','courseServlet.do','courseEdit.html','edit',460,300,null,function(){
             	$("#ui_course_editform").form("load",row);
             });  
     }

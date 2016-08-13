@@ -23,7 +23,13 @@
                 <th style="width:30%">状态：
                 </th>
                 <td>
-                    <input type="text" name="courseStatus" id="ui_course_courseStatus" class="easyui-textbox"  autocomplete="off" />
+                	<select name="courseStatus" id="ui_course_courseStatus" class="easyui-combobox"
+                        data-options="editable:false,panelHeight:'auto'" >
+                        	<option value="0">未审核</option>
+                        	<option value="1">审核通过</option>
+                        	<option value="2">考试</option>
+                        	<option value="3">练习</option>
+                        </select>                    
                 </td>
             </tr> 
             <tr style="display:none">

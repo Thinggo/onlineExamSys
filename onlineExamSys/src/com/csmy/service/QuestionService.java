@@ -37,5 +37,25 @@ public class QuestionService {
 	public void delete(String ids) throws Exception{
 		questionDao.delete(ids);
 	}
+	public int getQuestionQty(String courseId, String courseunitId, String questionTypeId, String difficulty) throws Exception {
+		String where = "1=1";
+		if(courseId!=null && courseId.length() >0){
+			where += " AND courseId="+courseId;
+		}
+		if(courseunitId!=null && courseunitId.length() >0){
+			where += " AND courseunitId="+courseunitId;
+		}
+		if(questionTypeId!=null && questionTypeId.length() >0){
+			where += " AND typeId="+questionTypeId;
+		}
+		
+		if(difficulty!=null && difficulty.length() >0){
+			where += " AND defficulty="+difficulty;
+		}
+		int cnt = 0;
+		List<Question> list = questionDao.select(where);
+		if(list!=null) cnt = list.size();
+		return cnt;
+	}
 		
 }

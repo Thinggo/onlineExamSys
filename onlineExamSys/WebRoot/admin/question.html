@@ -295,8 +295,10 @@
                             if (data.success) {
                                 $.show_warning("提示", data.msg);
                                 $("#ui_question_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
-                                //$("#ui_question_editor_dialog").dialog('destroy');
-                            	//UE.getEditor('ui_exam_editor').destroy(); 
+                                if(questionId>0){
+                                	$("#ui_question_editor_dialog").dialog('destroy');
+                            		UE.getEditor('ui_exam_editor').destroy(); 
+                                }
                             } else {
                                 $.show_warning("提示", data.msg);
                             }
