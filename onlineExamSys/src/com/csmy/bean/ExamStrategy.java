@@ -15,16 +15,19 @@ public class ExamStrategy  implements java.io.Serializable {
      private Integer id;
      private String name;
      private Integer courseId;
+     private String courseName;
      private Integer totalScore;
      private Integer passScore;
      private Byte strategystatus;
      private Date createtime;
-     private Byte isDiffOrunit;
+   
      private Byte examPattern;
      private Byte isShowResult;
      private Byte isArrangeRoom;
      private Integer teacherId;
+     private String teacherName;
      private Integer duration;
+
 
 
     // Constructors
@@ -33,36 +36,9 @@ public class ExamStrategy  implements java.io.Serializable {
     public ExamStrategy() {
     }
 
-	/** minimal constructor */
-    public ExamStrategy(Integer id, String name, Integer totalScore, Integer passScore, Date createtime, Byte isDiffOrunit, Byte isShowResult, Byte isArrangeRoom, Integer teacherId, Integer duration) {
-        this.id = id;
-        this.name = name;
-        this.totalScore = totalScore;
-        this.passScore = passScore;
-        this.createtime = createtime;
-        this.isDiffOrunit = isDiffOrunit;
-        this.isShowResult = isShowResult;
-        this.isArrangeRoom = isArrangeRoom;
-        this.teacherId = teacherId;
-        this.duration = duration;
-    }
+	
     
-    /** full constructor */
-    public ExamStrategy(Integer id, String name, Integer courseId, Integer totalScore, Integer passScore, Byte strategystatus, Date createtime, Byte isDiffOrunit, Byte examPattern, Byte isShowResult, Byte isArrangeRoom, Integer teacherId, Integer duration) {
-        this.id = id;
-        this.name = name;
-        this.courseId = courseId;
-        this.totalScore = totalScore;
-        this.passScore = passScore;
-        this.strategystatus = strategystatus;
-        this.createtime = createtime;
-        this.isDiffOrunit = isDiffOrunit;
-        this.examPattern = examPattern;
-        this.isShowResult = isShowResult;
-        this.isArrangeRoom = isArrangeRoom;
-        this.teacherId = teacherId;
-        this.duration = duration;
-    }
+   
 
    
     // Property accessors
@@ -91,7 +67,16 @@ public class ExamStrategy  implements java.io.Serializable {
         this.courseId = courseId;
     }
 
-    public Integer getTotalScore() {
+    
+    public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public Integer getTotalScore() {
         return this.totalScore;
     }
     
@@ -123,13 +108,7 @@ public class ExamStrategy  implements java.io.Serializable {
         this.createtime = createtime;
     }
 
-    public Byte getIsDiffOrunit() {
-        return this.isDiffOrunit;
-    }
     
-    public void setIsDiffOrunit(Byte isDiffOrunit) {
-        this.isDiffOrunit = isDiffOrunit;
-    }
 
     public Byte getExamPattern() {
         return this.examPattern;
@@ -162,21 +141,34 @@ public class ExamStrategy  implements java.io.Serializable {
     public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
     }
+    
+    public String getTeacherName() {
+		return teacherName;
+	}
 
-    public Integer getDuration() {
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+
+	public Integer getDuration() {
         return this.duration;
     }
     
     public void setDuration(Integer duration) {
         this.duration = duration;
     }
-   
 
-
-
-
-
-
-
-
+	@Override
+	public String toString() {
+		return "ExamStrategy [id=" + id + ", name=" + name + ", courseId="
+				+ courseId + ", CourseName=" + courseName + ", totalScore="
+				+ totalScore + ", passScore=" + passScore + ", strategystatus="
+				+ strategystatus + ", createtime=" + createtime
+				+ ", isDiffOrunit="  + ", examPattern="
+				+ examPattern + ", isShowResult=" + isShowResult
+				+ ", isArrangeRoom=" + isArrangeRoom + ", teacherId="
+				+ teacherId + ", TeacherName=" + teacherName + ", duration="
+				+ duration + "]";
+	}
+    
 }

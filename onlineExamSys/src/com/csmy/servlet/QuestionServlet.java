@@ -25,41 +25,59 @@ import com.csmy.service.QuestionService;
  * Servlet implementation class QuestionServlet
  */
 @WebServlet("/admin/questionServlet.do")
-public class QuestionServlet extends HttpServlet {
+public class QuestionServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private QuestionService questionService = new QuestionService();
-	
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-	
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		PrintWriter out = resp.getWriter();
+	@Override
+	protected void other(HttpServletRequest req, HttpServletResponse resp) {
 		String action = req.getParameter("action");
 		if("questionType".equals(action)){
 			questionTypeList(req,resp);
-		}else if("add".equals(action)){
-			add(req,resp);
-		}else if("edit".equals(action)){
-			edit(req,resp);
-		}else if("delete".equals(action)){
-			delete(req,resp);
-		}else if("search".equals(action)){
-			search(req,resp);
 		}else{
-			ResultModel rm = new ResultModel(-1,"未知操作");
-			String json = Utils.toJson(rm);
-			out.println(json);
-			out.flush();
+			doNothing(req, resp);
 		}
 	}
+	/**
+	 * 获取全部习题类型列表
+	 * @param req
+	 * @param resp
+	 */
+	private void questionTypeList(HttpServletRequest req, HttpServletResponse resp) {
+		List<QuestionType> list = null;
+		String json = "[]";
+		PrintWriter out = null;
+		try {			
+			out = resp.getWriter();
+			list = questionService.questionTypeList();
+			json = Utils.toJson(list);
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
+		out.print(json);
+		out.flush();		
+	}
 
-	private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		PrintWriter out = resp.getWriter();
-		String ids = req.getParameter("ids");
+	@Override
+	protected void list(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		super.list(req, resp);
+	}
+
+	@Override
+	protected void details(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		super.details(req, resp);
+	}
+
+	
+	@Override
+	protected void delete(HttpServletRequest req, HttpServletResponse resp)  {
+		PrintWriter out = null;
+		
 		try{
+			String ids = req.getParameter("ids");
+			out = resp.getWriter();
 			questionService.delete(ids);
 			ResultModel rm = new ResultModel(0,"删除成功！");
 			String json = Utils.toJson(rm);
@@ -72,9 +90,9 @@ public class QuestionServlet extends HttpServlet {
 		out.flush();
 		
 	}
-
-	private void edit(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-PrintWriter out = null;		
+	@Override
+	protected void edit(HttpServletRequest req, HttpServletResponse resp){
+		PrintWriter out = null;		
 		
 		try {						
 			out = resp.getWriter();
@@ -152,8 +170,8 @@ PrintWriter out = null;
 		}		
 		out.flush();		
 	}
-
-	private void add(HttpServletRequest req, HttpServletResponse resp) {
+	@Override
+	protected void add(HttpServletRequest req, HttpServletResponse resp) {
 		PrintWriter out = null;		
 		
 		try {						
@@ -226,8 +244,8 @@ PrintWriter out = null;
 		}		
 		out.flush();	
 	}
-
-	private void search(HttpServletRequest req, HttpServletResponse resp) {
+	@Override
+	protected void search(HttpServletRequest req, HttpServletResponse resp) {
 		
 		PagerModel<Question>  pm = null;
 		PrintWriter out = null;
@@ -243,25 +261,5 @@ PrintWriter out = null;
 			out.println("{total:0,rows:[]}");
 		}
 		out.flush();
-	}
-
-	/**
-	 * 获取全部习题类型列表
-	 * @param req
-	 * @param resp
-	 */
-	private void questionTypeList(HttpServletRequest req, HttpServletResponse resp) {
-		List<QuestionType> list = null;
-		String json = "[]";
-		PrintWriter out = null;
-		try {			
-			out = resp.getWriter();
-			list = questionService.questionTypeList();
-			json = Utils.toJson(list);
-		} catch (Exception e) {			
-			e.printStackTrace();
-		}
-		out.print(json);
-		out.flush();		
-	}
+	}	
 }

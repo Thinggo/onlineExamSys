@@ -1,13 +1,9 @@
 package com.csmy.servlet;
 
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,54 +14,28 @@ import com.csmy.bean.ResultModel;
 import com.csmy.bean.Teacher;
 import com.csmy.service.CourseService;
 @WebServlet("/admin/courseServlet.do")
-public class CourseServlet extends HttpServlet {
+public class CourseServlet extends BaseServlet {
 	
 	private CourseService courseService = new CourseService();
 	
+	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+	protected void other(HttpServletRequest req, HttpServletResponse resp) {
 		String action = req.getParameter("action");
-		resp.setContentType("text/plain");
-		
-		if("add".equals(action)){
-			add(req,resp);
-		}else if("edit".equals(action)){
-			edit(req,resp);
-		}else if("delete".equals(action)){
-			delete(req,resp);
-		}else if("details".equals(action)){
-			details(req,resp);
-		}else if("audit".equals(action)){
+		if("audit".equals(action)){
 			audit(req,resp);
-		}else if("list".equals(action)){
-			list(req,resp);
-		}else if("unitList".equals(action)){
-			unitList(req,resp);
 		}else{
-			listEx(req,resp);
+			doNothing(req,resp);
 		}
 	}
 
-	
-
-	private void unitList(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		PrintWriter out = resp.getWriter();
-		out.println("[]");
-		out.flush();		
-	}
-
-	private void audit(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		PrintWriter out = resp.getWriter();
+	protected void audit(HttpServletRequest req, HttpServletResponse resp){
+		PrintWriter out =null;
 		String ids = req.getParameter("ids");
 		String json = null;
 		try {
-			courseService.audit(ids, 2);
+			out = resp.getWriter();
+			courseService.audit(ids, 1);
 			ResultModel rm = new ResultModel(0,"审核成功！");
 			json = Utils.toJson(rm);
 		} catch (Exception e) {
@@ -77,11 +47,12 @@ public class CourseServlet extends HttpServlet {
 		out.flush();	
 		
 	}
-
-	private void list(HttpServletRequest req, HttpServletResponse resp) throws IOException {			
+	
+	protected void list(HttpServletRequest req, HttpServletResponse resp) {			
 		List<Course>  list = null;
-		PrintWriter out = resp.getWriter();
-		try {						
+		PrintWriter out = null;
+		try {				
+			out = resp.getWriter();
 			Teacher user = Utils.getCurrentUser(req);
 			list = courseService.list(user.getDeptId());
 			String json = Utils.toJson(list);
@@ -93,10 +64,11 @@ public class CourseServlet extends HttpServlet {
 		out.flush();		
 	}
 	
-	private void listEx(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	protected void search(HttpServletRequest req, HttpServletResponse resp) {
 		PagerModel<Course>  pm = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {			
+			 out = resp.getWriter();
 			PagerModel2 pm2 = Utils.formToBean(req, PagerModel2.class);
 			Teacher user = Utils.getCurrentUser(req);
 			pm = courseService.search(user.getId(),pm2.getSort()+" "+pm2.getOrder(), pm2.getPageSize(), pm2.getPageIndex(), pm2.getWhere());			
@@ -110,16 +82,12 @@ public class CourseServlet extends HttpServlet {
 		
 	}
 
-	private void details(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		PrintWriter out = resp.getWriter();
+	protected void delete(HttpServletRequest req, HttpServletResponse resp)  {
+		PrintWriter out = null;
 		String ids = req.getParameter("ids");
 		String json = null;
 		try {
+			out = resp.getWriter();
 			courseService.delete(ids);
 			ResultModel rm = new ResultModel(0,"删除成功！");
 			json = Utils.toJson(rm);
@@ -132,11 +100,12 @@ public class CourseServlet extends HttpServlet {
 		out.flush();		
 	}
 
-	private void edit(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		PrintWriter out = resp.getWriter();
+	protected void edit(HttpServletRequest req, HttpServletResponse resp) {
+		PrintWriter out = null;
 		Course c = null;		
 		String json = null;
 		try {			
+			out = resp.getWriter();
 			c = Utils.formToBean(req, Course.class);	
 			Teacher currentUser = Utils.getCurrentUser(req);
 			c.setTeacherid(currentUser.getId());
@@ -154,12 +123,13 @@ public class CourseServlet extends HttpServlet {
 		
 	}
 
-	private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	protected void add(HttpServletRequest req, HttpServletResponse resp)  {
 		
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		Course c = Utils.formToBean(req, Course.class);		
 		String json = null;
 		try {			
+			out = resp.getWriter();
 			Teacher currentUser = Utils.getCurrentUser(req);
 			c.setTeacherid(currentUser.getId());
 			c.setDepartmentid(currentUser.getDeptId());

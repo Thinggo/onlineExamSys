@@ -13,8 +13,14 @@ public class ExamStrategyDetail  implements java.io.Serializable {
 
      private Integer id;
      private Integer strategyId;
+     private String strategyName;
      private Integer questionType;
-     private Integer unitId;
+     private String questionTypeName;
+     private Integer unitId;     
+     private String unitName;
+     
+     private Integer difficulty; 
+     
      private Integer quantity;
      private Integer score;
 
@@ -62,8 +68,16 @@ public class ExamStrategyDetail  implements java.io.Serializable {
     public void setStrategyId(Integer strategyId) {
         this.strategyId = strategyId;
     }
+    
+    public String getStrategyName() {
+		return strategyName;
+	}
 
-    public Integer getQuestionType() {
+	public void setStrategyName(String strategyName) {
+		this.strategyName = strategyName;
+	}
+
+	public Integer getQuestionType() {
         return this.questionType;
     }
     
@@ -71,15 +85,31 @@ public class ExamStrategyDetail  implements java.io.Serializable {
         this.questionType = questionType;
     }
 
-    public Integer getUnitId() {
+    public String getQuestionTypeName() {
+		return questionTypeName;
+	}
+
+	public void setQuestionTypeName(String questionTypeName) {
+		this.questionTypeName = questionTypeName;
+	}
+
+	public Integer getUnitId() {
         return this.unitId;
     }
     
     public void setUnitId(Integer unitId) {
         this.unitId = unitId;
     }
+    
+    public String getUnitName() {
+		return unitName;
+	}
 
-    public Integer getQuantity() {
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
+
+	public Integer getQuantity() {
         return this.quantity;
     }
     
@@ -94,13 +124,13 @@ public class ExamStrategyDetail  implements java.io.Serializable {
     public void setScore(Integer score) {
         this.score = score;
     }
+
+	public Integer getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(Integer difficulty) {
+		this.difficulty = difficulty;
+	}
    
-
-
-
-
-
-
-
-
 }

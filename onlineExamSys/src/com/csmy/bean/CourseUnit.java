@@ -1,6 +1,8 @@
 package com.csmy.bean;
 
+import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
 
 /**
  * CourseUnit entity. @author MyEclipse Persistence Tools
@@ -12,12 +14,13 @@ public class CourseUnit  implements java.io.Serializable {
     // Fields    
 
      private Integer id;
+     @SerializedName("text")
      private String name;
      private Integer pid;
      private Integer courseId;
      private Integer seqNo;
      private String remark;
-
+     private List<CourseUnit> children;
 
     // Constructors
 
@@ -91,13 +94,13 @@ public class CourseUnit  implements java.io.Serializable {
     public void setRemark(String remark) {
         this.remark = remark;
     }
-   
 
+	public List<CourseUnit> getChildren() {
+		return children;
+	}
 
-
-
-
-
-
-
+	public void setChildren(List<CourseUnit> children) {
+		this.children = children;
+	}
+  
 }

@@ -122,3 +122,108 @@ stringToList = function (value) {
         return [];
     }
 };
+
+/*
+ * title: 对话框标题
+ * modname: 模块名称
+ * url:提交的url
+ * html:编辑的网页
+ * action: add|edit
+ * w:对话框宽度
+ * h:对话框高度
+ * fnLoad:对话框加载后执行的函数
+ * 
+ */
+ui_dg_add_edit = function(title,modname,url,html,action,w,h,fnSuccess,fnLoad) {
+    $("<div/>").dialog({
+        id: modname+"_add_dialog",
+        href: html,
+        title: title,
+        iconCls: 'icon-add',
+        height: h,
+        width: w,
+        modal: true,
+        buttons: [{
+            id: modname+"_add_btn",
+            iconCls: 'icon-add',
+            text: action=='add'?'添 加':'修改',
+            handler: function () {
+                $("#"+modname+"_editform").form("submit", {
+                    url: url,
+                    onSubmit: function (param) {
+                        $('#'+modname+'_add_btn').linkbutton('disable');    //点击就禁用按钮，防止连击
+                        param.action = action;
+                        if ($(this).form('validate'))
+                            return true;
+                        else {
+                            $('#'+modname+'_add_btn').linkbutton('enable');   //恢复按钮
+                            return false;
+                        }
+                    },
+                    success: function (data) {
+                        var dataJson = eval('(' + data + ')');    //转成json格式
+                        if (dataJson.success) {
+                            $("#"+modname+"_add_dialog").dialog('destroy');  //销毁dialog对象
+                            $.show_warning("提示", dataJson.msg);
+                            if(fnSuccess){
+                            	fnSuccess();
+                            }else{
+                            	$("#"+modname+"_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
+                            }
+                        } else {
+                            $('#'+modname+'_add_btn').linkbutton('enable');   //恢复按钮
+                            $.show_warning("提示", dataJson.msg);
+                        }
+                    }
+                });
+            }
+        }],
+        onLoad: function () {
+        	if(fnLoad) fnLoad();
+        },
+        onClose: function () {
+            $("#"+modname+"_add_dialog").dialog('destroy');  //销毁dialog对象
+        }
+    });
+}
+
+ui_dg_delete=function(title,modname,url,fnSuccess){
+    var rows = $("#"+modname+"_dg").datagrid("getChecked");
+    if (rows.length < 1) {
+        $.show_warning("提示", "请先勾选要删除的"+title);
+        return;
+    }
+    $.messager.confirm('提示', '确定删除勾选的这' + rows.length + '个'+title+'？', function (r) {
+        if (r) {
+            para = {};
+            para.action = "delete";
+            para.timespan = new Date().getTime();
+
+            var ids = [];
+            $.each(rows, function (i, row) {
+                ids.push(row.id);
+            });
+            para.ids = ids.join(",");
+            $.ajax({
+                url: url,
+                data: para,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        $.show_warning("提示", "删除成功！");
+                        
+                        if(fnSuccess){
+                        	fnSuccess();
+                        }
+                        else{
+                        	$("#"+modname+"_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
+                        }
+                    } else {
+                        $.show_warning("提示", data.msg);
+                    }
+                }
+            });
+        }
+    });
+} 

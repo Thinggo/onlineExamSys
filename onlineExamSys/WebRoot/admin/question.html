@@ -6,9 +6,61 @@
 	var modurl="questionServlet.do";
 	$(function() {
 		ui_question_init_list();
+		
+		$('#ui_question_dg_tb_course').combobox( {
+			url : 'courseServlet.do?action=list',
+			method : 'get',
+			valueField : 'id',
+			textField : 'name',
+			panelHeight : 'auto',
+			editable : false,
+			icons : [ {
+				iconCls : 'icon-tip'
+			} ],
+			formatter : function(row) {
+				var s = '<span style="font-weight:bold">' + row.name
+						+ '</span><br/>';
+				return s;
+			},
+			onSelect : function(row) {				
+				$('#ui_question_dg_tb_unit').combotree( {
+					url : 'courseUnitServlet.do?action=list&courseId='+1,
+					method : 'get',					
+					lines:true,	
+					panelHeight : 'auto',
+					editable : false,
+					icons : [ {
+						iconCls : 'icon-tip'
+					} ],
+					formatter : function(r) {
+						var s = '<span style="font-weight:bold">' + r.text
+								+ '</span><br/>';
+						return s;
+					},
+					onSelect : function(r) {	
+								
+					}
+				});
+			}
+		});			
+		$('#ui_question_dg_tb_type').combobox( {
+			url : 'questionServlet.do?action=questionType',
+			method : 'get',
+			valueField : 'typeId',
+			textField : 'typeName',
+			panelHeight : 'auto',
+			editable : false,
+			icons : [ {
+				iconCls : 'icon-tip'
+			} ],
+			formatter : function(row) {
+				var s = '<span style="font-weight:bold">' + row.typeName
+						+ '</span><br/>';
+				return s;
+			}
+		});
 	});
-	
-	
+		
 	function ui_question_init_list(){
     	
         $("#ui_question_dg").datagrid({       //初始化datagrid
@@ -76,28 +128,23 @@
 				return s;
 			},
 			onSelect : function(row) {
-				
+				$('#ui_question_course_unit').combotree( {
+					url : 'courseUnitServlet.do?action=list&courseId='+row.id,
+					method : 'get',
+					panelHeight : 'auto',
+					editable : false,
+					icons : [ {
+						iconCls : 'icon-tip'
+					} ],
+					formatter : function(r) {
+						var s = '<span style="font-weight:bold">' + r.text
+								+ '</span><br/>';
+						return s;
+					}
+				});
 			}
 		});
-		$('#ui_question_course_unit').combobox( {
-			url : 'courseServlet.do?action=listUnit',
-			method : 'get',
-			valueField : 'id',
-			textField : 'name',
-			panelHeight : 'auto',
-			editable : false,
-			icons : [ {
-				iconCls : 'icon-tip'
-			} ],
-			formatter : function(row) {
-				var s = '<span style="font-weight:bold">' + row.name
-						+ '</span><br/>';
-				return s;
-			},
-			onSelect : function(row) {
-				
-			}
-		});
+		
 		$('#ui_question_questionType').combobox({
 			url : 'questionServlet.do?action=questionType',
 			method : 'get',
@@ -296,7 +343,8 @@
                 	
                 }
             }],
-            onLoad: function () {            
+            onLoad: function () {  
+            	
             	ui_question_init_editor();
             	var ue = UE.getEditor('ui_exam_editor');    
             	$('#hiddenQuestionId').val(question.id);
@@ -305,16 +353,18 @@
             	if(question){
             		$('#ui_question_course').combobox('setValue',question.courseId);
             		$('#ui_question_questionType').combobox('setValue',question.typeId);
-            		if(question.courseunitId){
-            			$('#ui_question_course_unit').combobox('setValue',question.courseunitId);
-            		}
+            		
             		$('#ui_question_difficulty').slider("setValue",question.defficulty);
             		$('#hiddenExplain').val(question.explanin);
             		$('#hiddenQuestion').val(question.title);
             		ui_question_option_init(question.typeId,question);
 	            	ue.addListener("ready", function () {                    
-	                    ue.setContent(question.title);
+	                    ue.setContent(question.title);	                    
+	                    
 	          		});
+	            	if(question.courseunitId){
+            			$('#ui_question_course_unit').combotree('setValue',question.courseunitId);
+            		}
             	}
             	
             },
@@ -385,11 +435,13 @@
         	<a href="#" class="easyui-linkbutton" plain="true"  >|</a>
         	
 			课程: 
-			<input class="easyui-combobox" id="ui_question_dg_tb_course"  valueField="id" textField="name"  url="courseServlet.do?action=list" />
+			<input id="ui_question_dg_tb_course" />
 			单元:
-			<input class="easyui-combobox"  id="ui_question_dg_tb_unit"  valueField="id" textField="name"  url="courseServlet.do?action=unitList" />
+			<input id="ui_question_dg_tb_unit"  />
+			<img style="cursor: pointer; vertical-align: middle;" onclick="$('#ui_question_dg_tb_unit').combotree('clear');"
+                        alt="清空单元" title="清空单元" src="easyui/themes/icons/edit-clear.png" />
 			题型:
-			<input class="easyui-combobox"  id="ui_question_dg_tb_type"  valueField="typeId" textField="typeName" url="questionServlet.do?action=questionType" />
+			<input id="ui_question_dg_tb_type" />
 			试题内容:
 			<input class="easyui-textbox"  id="ui_question_dg_tb_title" />
 			<a href="#" class="easyui-linkbutton" onclick="ui_question_search()" iconCls="icon-search">查询</a>

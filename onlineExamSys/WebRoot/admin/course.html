@@ -63,52 +63,7 @@
     }
     //添加
     function ui_course_add() {
-        $("<div/>").dialog({
-            id: "ui_course_add_dialog",
-            href: "courseEdit.html",
-            title: "新增课程",
-            iconCls:"icon-add",
-            height: 400,
-            width: 460,
-            modal: true,
-            buttons: [{
-                id: "ui_course_add_btn",
-                text: '添 加',
-                iconCls: "icon-add",
-                handler: function () {
-                    $("#ui_course_editform").form("submit", {
-                        url: modurl,
-                        onSubmit: function (param) {
-                            $('#ui_course_add_btn').linkbutton('disable');    //点击就禁用按钮，防止连击
-                            param.action = 'add';
-                            if ($(this).form('validate'))
-                                return true;
-                            else {
-                                $('#ui_course_add_btn').linkbutton('enable');   //恢复按钮
-                                return false;
-                            }
-                        },
-                        success: function (data) {                        
-                            var dataJson = eval('(' + data + ')');    //转成json格式
-                            if (dataJson.success) {
-                                $("#ui_course_add_dialog").dialog('destroy'); //销毁dialog对象
-                                $.show_warning("提示", "添加成功！");
-                                $("#ui_course_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
-                            } else {
-                                $('#ui_course_add_btn').linkbutton('enable');   //恢复按钮
-                                $.show_warning("提示", dataJson.msg);
-                            }
-                        }
-                    });
-                }
-            }],
-            onLoad: function () {
-                $("#ui_name_edit").focus();
-            },
-            onClose: function () {
-                $("#ui_course_add_dialog").dialog('destroy');  //销毁dialog对象
-            }
-        });
+    	ui_dg_add_edit('添加课程','ui_course','courseServlet.do','courseEdit.html','add',460,400);  
     }
     //修改课程
     function ui_course_edit() {
@@ -123,53 +78,17 @@
         	$.show_warning("提示", "课程已经审核通过，不能再修改！");
         	return;
         }
-        $("<div/>").dialog({
-            id: "ui_course_edit_dialog",
-            href: "courseEdit.html",
-            title: "修改课程",
-            iconCls: "icon-edit",
-            height:400,
-            width: 460,
-            modal: true,
-            buttons: [{
-                id: "ui_course_edit_btn",
-                text: '修 改',
-                iconCls: "icon-edit",
-                handler: function () {
-                    $("#ui_course_editform").form("submit", {
-                        url: modurl,
-                        onSubmit: function (param) {
-                            $('#ui_course_edit_btn').linkbutton('disable');   //点击就禁用按钮，防止连击
-                            param.action = 'edit';
-                            if ($(this).form('validate'))
-                                return true;
-                            else {
-                                $('#ui_course_edit_btn').linkbutton('enable');   //恢复按钮
-                                return false;
-                            }
-                        },
-                        success: function (data) {
-                            var dataJson = eval('(' + data + ')');    //转成json格式
-                            if (dataJson.success) {
-                                $("#ui_course_edit_dialog").dialog('destroy');  //销毁dialog对象
-                                $.show_warning("提示", "修改成功！");
-                                $("#ui_course_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
-                            } else {
-                                $('#ui_course_edit_btn').linkbutton('enable');    //恢复按钮
-                                $.show_warning("提示", dataJson.msg);
-                            }
-                        }
-                    });
-                }
-            }],
-            onLoad: function () {
+        
+        ui_dg_add_edit('修改课程','ui_course','courseServlet.do','courseEdit.html','edit',460,400,null,function(){
             	$("#ui_course_editform").form("load",row);
-            },
-            onClose: function () {
-                $("#ui_course_edit_dialog").dialog('destroy');  //销毁dialog对象
-            }
-        });
+            });  
     }
+    
+  //删除区域
+    function ui_course_delete() {
+    	ui_dg_delete('课程','ui_course','courseServlet.do');        
+    }
+    
     function ui_course_audit(){
     	var rows = $("#ui_course_dg").datagrid("getChecked");
         if (rows.length < 1) {
@@ -204,41 +123,7 @@
             }
         });
     }
-    //删除区域
-    function ui_course_delete() {
-        var rows = $("#ui_course_dg").datagrid("getChecked");
-        if (rows.length < 1) {
-            $.show_warning("提示", "请先勾选要删除的课程");
-            return;
-        }
-        $.messager.confirm('提示', '确定删除勾选的这' + rows.length + '门课程吗？', function (r) {
-            if (r) {
-                para = {};
-                para.action = "delete";
-                para.timespan = new Date().getTime();
-
-                var ids = [];
-                $.each(rows, function (i, row) {
-                    ids.push(row.id);
-                });
-                para.ids = ids.join(",");
-                $.ajax({
-                    url: modurl,
-                    data: para,
-                    type: "POST",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.success) {
-                            $.show_warning("提示", "删除成功！");
-                            $("#ui_course_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
-                        } else {
-                            $.show_warning("提示", data.msg);
-                        }
-                    }
-                });
-            }
-        });
-    }
+    
     
 </script>
 <div id="ui_layout" class="easyui-layout" data-options="fit:true,border:false">
