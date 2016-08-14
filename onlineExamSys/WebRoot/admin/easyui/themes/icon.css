@@ -99,11 +99,6 @@
 .icon-authorize{background:url('icons/authorize.png') no-repeat center center; }
 .icon-boss{background:url('icons/boss.png') no-repeat center center; }
 .icon-business{background:url('icons/business.png') no-repeat center center; }
-.icon-bug{background:url('icons/bug.png') no-repeat center center; }
-.icon-bug_delete{background:url('icons/bug_delete.png') no-repeat center center; }
-.icon-bug_edit{background:url('icons/bug_edit.png') no-repeat center center; }
-.icon-bug_go{background:url('icons/bug_go.png') no-repeat center center; }
-.icon-button{background:url('icons/button.png') no-repeat center center; }
 .icon-collapse{background:url('icons/collapse.png') no-repeat center center; }
 .icon-delete{background:url('icons/delete3.png') no-repeat center center; }
 .icon-expand{background:url('icons/expand.png') no-repeat center center; }
@@ -111,7 +106,7 @@
 .icon-extract{background:url('icons/extract.png') no-repeat center center; }
 .icon-group{background:url('icons/group.png') no-repeat center center; }
 .icon-exam{background:url('icons/grave.png') no-repeat center center; }
-.icon-course{background:url('icons/init.png') no-repeat center center; }
+.icon-course{background:url('icons/course.png') no-repeat center center; }
 .icon-key{background:url('icons/key.png') no-repeat center center; }
 .icon-log{background:url('icons/log.png') no-repeat center center; }
 .icon-login{background:url('icons/login.png') no-repeat center center; }
