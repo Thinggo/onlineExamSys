@@ -2,112 +2,135 @@ package com.csmy.bean;
 
 import java.util.Date;
 
-
 /**
  * ExamStudent entity. @author MyEclipse Persistence Tools
  */
 
-public class ExamStudent  implements java.io.Serializable {
+public class ExamStudent implements java.io.Serializable {
 
+	// Fields
 
-    // Fields    
+	private Integer id;
+	private Integer studentId;
+	private String studentName;
+	private Integer examplanId;
+	private String examplanName;
+	private Integer examRoomId;
+	private String examRoomName;
+	private Integer seatNo;
+	private Date loginTime;
+	private String loginIp;
+	private Integer overTime;
+	private Integer examstatus;
+	private Date submitTime;
 
-     private ExamStudentId id;
-     private Integer examRoomId;
-     private Integer seatNo;
-     private Date loginTime;
-     private Integer overTime;
-     private Integer examstatus;
-     private Date submitTime;
+	// Constructors
 
+	/** default constructor */
+	public ExamStudent() {
+	}
 
-    // Constructors
+	public Integer getId() {
+		return id;
+	}
 
-    /** default constructor */
-    public ExamStudent() {
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-	/** minimal constructor */
-    public ExamStudent(ExamStudentId id) {
-        this.id = id;
-    }
-    
-    /** full constructor */
-    public ExamStudent(ExamStudentId id, Integer examRoomId, Integer seatNo, Date loginTime, Integer overTime, Integer examstatus, Date submitTime) {
-        this.id = id;
-        this.examRoomId = examRoomId;
-        this.seatNo = seatNo;
-        this.loginTime = loginTime;
-        this.overTime = overTime;
-        this.examstatus = examstatus;
-        this.submitTime = submitTime;
-    }
+	public Integer getStudentId() {
+		return studentId;
+	}
 
-   
-    // Property accessors
+	public void setStudentId(Integer studentId) {
+		this.studentId = studentId;
+	}
 
-    public ExamStudentId getId() {
-        return this.id;
-    }
-    
-    public void setId(ExamStudentId id) {
-        this.id = id;
-    }
+	public Integer getExamplanId() {
+		return examplanId;
+	}
 
-    public Integer getExamRoomId() {
-        return this.examRoomId;
-    }
-    
-    public void setExamRoomId(Integer examRoomId) {
-        this.examRoomId = examRoomId;
-    }
+	public void setExamplanId(Integer examplanId) {
+		this.examplanId = examplanId;
+	}
 
-    public Integer getSeatNo() {
-        return this.seatNo;
-    }
-    
-    public void setSeatNo(Integer seatNo) {
-        this.seatNo = seatNo;
-    }
+	public Integer getExamRoomId() {
+		return examRoomId;
+	}
 
-    public Date getLoginTime() {
-        return this.loginTime;
-    }
-    
-    public void setLoginTime(Date loginTime) {
-        this.loginTime = loginTime;
-    }
+	public void setExamRoomId(Integer examRoomId) {
+		this.examRoomId = examRoomId;
+	}
 
-    public Integer getOverTime() {
-        return this.overTime;
-    }
-    
-    public void setOverTime(Integer overTime) {
-        this.overTime = overTime;
-    }
+	public Integer getSeatNo() {
+		return seatNo;
+	}
 
-    public Integer getExamstatus() {
-        return this.examstatus;
-    }
-    
-    public void setExamstatus(Integer examstatus) {
-        this.examstatus = examstatus;
-    }
+	public void setSeatNo(Integer seatNo) {
+		this.seatNo = seatNo;
+	}
 
-    public Date getSubmitTime() {
-        return this.submitTime;
-    }
-    
-    public void setSubmitTime(Date submitTime) {
-        this.submitTime = submitTime;
-    }
-   
+	public Date getLoginTime() {
+		return loginTime;
+	}
 
+	public void setLoginTime(Date loginTime) {
+		this.loginTime = loginTime;
+	}
 
+	public Integer getOverTime() {
+		return overTime;
+	}
 
+	public void setOverTime(Integer overTime) {
+		this.overTime = overTime;
+	}
 
+	public Integer getExamstatus() {
+		return examstatus;
+	}
 
+	public void setExamstatus(Integer examstatus) {
+		this.examstatus = examstatus;
+	}
 
+	public Date getSubmitTime() {
+		return submitTime;
+	}
 
+	public void setSubmitTime(Date submitTime) {
+		this.submitTime = submitTime;
+	}
 
+	public String getStudentName() {
+		return studentName;
+	}
+
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
+
+	public String getExamplanName() {
+		return examplanName;
+	}
+
+	public void setExamplanName(String examplanName) {
+		this.examplanName = examplanName;
+	}
+
+	public String getExamRoomName() {
+		return examRoomName;
+	}
+
+	public void setExamRoomName(String examRoomName) {
+		this.examRoomName = examRoomName;
+	}
+
+	public String getLoginIp() {
+		return loginIp;
+	}
+
+	public void setLoginIp(String loginIp) {
+		this.loginIp = loginIp;
+	}
 }

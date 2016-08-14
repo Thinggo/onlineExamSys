@@ -1,5 +1,6 @@
-package com.csmy.servlet;
+package com.csmy.utils;
 
+import java.io.Serializable;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -8,13 +9,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
 
 import com.csmy.bean.Teacher;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Utils {
-	
+	static {
+		// 在封装之前 注册转换器
+		ConvertUtils.register(new DateTimeConverter(), java.util.Date.class);
+	}
 	private final static String CURRENT_USER_KEY="ONLINE_EXAM_CURRENT_USER_KEY";
 	public static Teacher getCurrentUser(HttpServletRequest request){
 		Teacher user = (Teacher) request.getSession().getAttribute(CURRENT_USER_KEY);
@@ -32,18 +37,27 @@ public class Utils {
 		request.getSession().setAttribute(CURRENT_USER_KEY,user);
 	}
 	
-	public static <T> T formToBean(HttpServletRequest request, Class<T> beanClass) {  
-        try {  
-            // 创建封装数据的bean  
-            T bean = beanClass.newInstance();  
-            Map map = request.getParameterMap();  
-            BeanUtils.populate(bean, map);  
-            return bean;  
-        } catch (Exception e) {  
-            throw new RuntimeException(e);  
-        }  
-    }  
-	
+	/**
+	 * 请求信息封装到对象
+	 *
+	 * @param request
+	 *            请求信息
+	 * @param clazz
+	 *            封装对象
+	 */
+	@SuppressWarnings("unchecked")
+	public static <E> E formToBean(HttpServletRequest request, Class<E> clazz) {		
+		E obj = null;
+		try {
+			obj = clazz.newInstance();
+			Map<String, String[]> parameterMap = request.getParameterMap();
+			BeanUtils.populate(obj, parameterMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}
+		
 	public static String toJson(Object obj) {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").excludeFieldsWithModifiers(Modifier.PUBLIC)
 				.create();

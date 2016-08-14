@@ -230,7 +230,7 @@ ui_dg_delete=function(title,modname,url,fnSuccess){
             para = {};
             para.action = "delete";
             para.timespan = new Date().getTime();
-
+            
             var ids = [];
             $.each(rows, function (i, row) {
                 ids.push(row.id);
