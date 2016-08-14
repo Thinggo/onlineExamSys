@@ -12,12 +12,14 @@ public class ExamPlan  implements java.io.Serializable {
 
     // Fields    
 
-     private Integer id;
+	 private Integer id;
      private String name;
      private String descrption;
      private Integer strategyId;
+     private String strategyName;
      private Date beginTime;
      private Integer teacherId;
+     private String teacherName;
      private Date createTime;
 
 
@@ -35,83 +37,79 @@ public class ExamPlan  implements java.io.Serializable {
         this.teacherId = teacherId;
         this.createTime = createTime;
     }
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescrption() {
+		return descrption;
+	}
+
+	public void setDescrption(String descrption) {
+		this.descrption = descrption;
+	}
+
+	public Integer getStrategyId() {
+		return strategyId;
+	}
+
+	public void setStrategyId(Integer strategyId) {
+		this.strategyId = strategyId;
+	}
+
+	public String getStrategyName() {
+		return strategyName;
+	}
+
+	public void setStrategyName(String strategyName) {
+		this.strategyName = strategyName;
+	}
+
+	public Date getBeginTime() {
+		return beginTime;
+	}
+
+	public void setBeginTime(Date beginTime) {
+		this.beginTime = beginTime;
+	}
+
+	public Integer getTeacherId() {
+		return teacherId;
+	}
+
+	public void setTeacherId(Integer teacherId) {
+		this.teacherId = teacherId;
+	}
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
     
-    /** full constructor */
-    public ExamPlan(Integer id, String name, String descrption, Integer strategyId, Date beginTime, Integer teacherId, Date createTime) {
-        this.id = id;
-        this.name = name;
-        this.descrption = descrption;
-        this.strategyId = strategyId;
-        this.beginTime = beginTime;
-        this.teacherId = teacherId;
-        this.createTime = createTime;
-    }
-
-   
-    // Property accessors
-
-    public Integer getId() {
-        return this.id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescrption() {
-        return this.descrption;
-    }
-    
-    public void setDescrption(String descrption) {
-        this.descrption = descrption;
-    }
-
-    public Integer getStrategyId() {
-        return this.strategyId;
-    }
-    
-    public void setStrategyId(Integer strategyId) {
-        this.strategyId = strategyId;
-    }
-
-    public Date getBeginTime() {
-        return this.beginTime;
-    }
-    
-    public void setBeginTime(Date beginTime) {
-        this.beginTime = beginTime;
-    }
-
-    public Integer getTeacherId() {
-        return this.teacherId;
-    }
-    
-    public void setTeacherId(Integer teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public Date getCreateTime() {
-        return this.createTime;
-    }
-    
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-   
-
-
-
-
-
-
-
-
+     
+  
 }

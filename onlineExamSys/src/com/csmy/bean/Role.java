@@ -6,31 +6,31 @@ package com.csmy.bean;
  * UserRole entity. @author MyEclipse Persistence Tools
  */
 
-public class UserRole  implements java.io.Serializable {
+public class Role  implements java.io.Serializable {
 
 
     // Fields    
 
      private Integer id;
-     private String rolename;
+     private String name;
      private String remark;
 
 
     // Constructors
 
     /** default constructor */
-    public UserRole() {
+    public Role() {
     }
 
 	/** minimal constructor */
-    public UserRole(Integer id) {
+    public Role(Integer id) {
         this.id = id;
     }
     
     /** full constructor */
-    public UserRole(Integer id, String rolename, String remark) {
+    public Role(Integer id, String rolename, String remark) {
         this.id = id;
-        this.rolename = rolename;
+        this.name = rolename;
         this.remark = remark;
     }
 
@@ -45,12 +45,12 @@ public class UserRole  implements java.io.Serializable {
         this.id = id;
     }
 
-    public String getRolename() {
-        return this.rolename;
+    public String getName() {
+        return this.name;
     }
     
-    public void setRolename(String rolename) {
-        this.rolename = rolename;
+    public void setName(String name) {
+        this.name =name;
     }
 
     public String getRemark() {

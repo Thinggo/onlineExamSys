@@ -1,21 +1,21 @@
 ﻿$(function () {
-    //initLogin();
+    initLogin();
 })
 
 function initLogin() {
     $('#treeLeft').tree({    //初始化左侧功能树（不同用户显示的树是不同的）
         method: 'GET',
-        url: 'ashx/rm_menu.ashx?action=getUserMenu',
-        lines: true,
+        url: 'menuServlet.do?action=listSysMenu',
+        lines: true,        
         onClick: function (node) {    //点击左侧的tree节点  打开右侧tabs显示内容
             if (node.url) {
                 addTab(node.text, node.url, node.iconCls);
             }
         }
     });
-
+/*
     $.ajax({
-        url: "ashx/rm_login.ashx",
+        url: "teacherServlet.do",
         type: "post",
         data: { action: "getuser" },
         dataType: "json",
@@ -31,6 +31,7 @@ function initLogin() {
             }
         }
     });
+*/    
 }
 
 function addTab(subtitle, url, icon) {

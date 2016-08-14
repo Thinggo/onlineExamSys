@@ -1,6 +1,8 @@
 package com.csmy.bean;
 
+import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Menu entity. @author MyEclipse Persistence Tools
@@ -12,14 +14,19 @@ public class Menu  implements java.io.Serializable {
     // Fields    
 
      private Integer id;
+     @SerializedName("text")
      private String name;
      private String url;
-     private String pid;
+     private Integer pid;
      private Integer seqNo;
+     @SerializedName("iconCls")
      private String icon;
      private Integer menustatus;
      private Integer menutype;
-
+     private List<Menu> children;
+     
+     //业务逻辑需要添加:用于做授权控制
+     private boolean checked;
 
     // Constructors
 
@@ -35,7 +42,7 @@ public class Menu  implements java.io.Serializable {
     }
     
     /** full constructor */
-    public Menu(Integer id, String name, String url, String pid, Integer seqNo, String icon, Integer menustatus, Integer menutype) {
+    public Menu(Integer id, String name, String url, Integer pid, Integer seqNo, String icon, Integer menustatus, Integer menutype) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -73,11 +80,11 @@ public class Menu  implements java.io.Serializable {
         this.url = url;
     }
 
-    public String getPid() {
+    public Integer getPid() {
         return this.pid;
     }
     
-    public void setPid(String pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 
@@ -112,6 +119,22 @@ public class Menu  implements java.io.Serializable {
     public void setMenutype(Integer menutype) {
         this.menutype = menutype;
     }
+
+	public List<Menu> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Menu> children) {
+		this.children = children;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
    
 
 

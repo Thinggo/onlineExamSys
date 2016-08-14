@@ -1,6 +1,8 @@
 package com.csmy.bean;
 
+import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Department entity. @author MyEclipse Persistence Tools
@@ -13,11 +15,13 @@ public class Department  implements java.io.Serializable {
 
      private Integer id;
      private String code;
+     @SerializedName("text")
      private String name;
-     private String pid;
-     private String type;
+     private Integer pid;
+     private Integer type;
      private Byte isClosed;
      private String remark;
+     private List<Department> children;
 
 
     // Constructors
@@ -27,7 +31,7 @@ public class Department  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public Department(Integer id, String code, String name, String type, Byte isClosed) {
+    public Department(Integer id, String code, String name, Integer type, Byte isClosed) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -36,7 +40,7 @@ public class Department  implements java.io.Serializable {
     }
     
     /** full constructor */
-    public Department(Integer id, String code, String name, String pid, String type, Byte isClosed, String remark) {
+    public Department(Integer id, String code, String name, Integer pid, Integer type, Byte isClosed, String remark) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -73,19 +77,19 @@ public class Department  implements java.io.Serializable {
         this.name = name;
     }
 
-    public String getPid() {
+    public Integer getPid() {
         return this.pid;
     }
     
-    public void setPid(String pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 
-    public String getType() {
+    public Integer getType() {
         return this.type;
     }
     
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -104,6 +108,14 @@ public class Department  implements java.io.Serializable {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+	public List<Department> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Department> children) {
+		this.children = children;
+	}
    
 
 

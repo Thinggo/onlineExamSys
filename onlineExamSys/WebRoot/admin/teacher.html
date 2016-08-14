@@ -20,24 +20,22 @@
             sortOrder: 'desc',
             pageList: [20, 40, 60, 80, 100],
             frozenColumns: [[
-                             { field: 'ck', checkbox: true },
-                             { width: 100, title: '工号', field: 'no', sortable: true }
+                             { field: 'ck', checkbox: true }
                              ]],
             columns: [[
+						{ width: 100, title: '工号', field: 'no', sortable: true },
 					   { field: 'name',  title: '姓名',width: 80, sortable: true },
 					   { field: 'phone',  title: '电话',width: 80, sortable: true },
-                       { field: 'roleId', title: '角色', width: 180, sortable: true },
-                       { field: 'deptId', title: '部门', width: 150, sortable: true},
-                       { field: 'status', title: '状态', width: 150, sortable: true,
+                       { field: 'roleName', title: '角色', width: 180, sortable: true },
+                       { field: 'deptName', title: '部门', width: 150, sortable: true},
+                       { field: 'status', title: '状态', width: 60, sortable: true },
+                       { field: 'regTime', title: '注册时间', sortable: true, width:80,  
                            formatter: function (value, row, index) {
-                               return value && value.length > 15 ? '<span title="' + value + '">' + value + '</span>' : value;
-                           }
-                       },
-                       { field: 'regTime', title: '注册时间', sortable: true, width: 130 },
-                       { field: 'loginTime', title: '登录时间', sortable: true, width: 130 },
-                       { field: 'loginIp', title: '登录IP', sortable: true, width: 130 }
-            	]],
-            //toolbar: toolbar.length == 0 ? null : toolbar,
+                        	   if(value && value.length>10) return value.substring(0,10);
+                           } },
+                       { field: 'loginTime', title: '登录时间', sortable: true, width: 120 },
+                       { field: 'loginIp', title: '登录IP', sortable: true, width: 120 }
+            	]],           
             toolbar: [{
                 text: '添加',
                 iconCls: 'icon-add',
@@ -50,11 +48,7 @@
                 text: '删除',
                 iconCls: 'icon-remove',
                 handler: function () { ui_teacher_delete() }
-            }, '-', {
-                text: '部门设置',
-                iconCls: 'icon-group',
-                handler: function () { ui_teacher_setdept() }
-            }, {
+            }, '-',{
                 text: '角色设置',
                 iconCls: 'icon-key',
                 handler: function () { ui_teacher_setrole() }
@@ -70,182 +64,60 @@
 
     //添加用户
     function ui_teacher_add() {
-        $("<div/>").dialog({
-            id: "ui_teacher_add_dialog",
-            href: "teacherEdit.html",
-            title: "添加用户",
-            iconCls: 'icon-add',
-            height: 350,
-            width: 460,
-            modal: true,
-            buttons: [{
-                id: "ui_teacher_add_btn",
-                iconCls: 'icon-add',
-                text: '添 加',
-                handler: function () {
-                    $("#ui_teacher_editform").form("submit", {
-                        url: modurl,
-                        onSubmit: function (param) {
-                            $('#ui_teacher_add_btn').linkbutton('disable');    //点击就禁用按钮，防止连击
-                            param.action = 'add';
-                            if ($(this).form('validate'))
-                                return true;
-                            else {
-                                $('#ui_teacher_add_btn').linkbutton('enable');   //恢复按钮
-                                return false;
-                            }
-                        },
-                        success: function (data) {
-                            var dataJson = eval('(' + data + ')');    //转成json格式
-                            if (dataJson.success) {
-                                $("#ui_teacher_add_dialog").dialog('destroy');  //销毁dialog对象
-                                $.show_warning("提示", "添加成功！");
-                                $("#ui_teacher_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
-                            } else {
-                                $('#ui_teacher_add_btn').linkbutton('enable');   //恢复按钮
-                                $.show_warning("提示", dataJson.msg);
-                            }
-                        }
-                    });
-                }
-            }],
-            onLoad: function () {
-                $("#ui_teacher_userid_add").focus();
-            },
-            onClose: function () {
-                $("#ui_teacher_add_dialog").dialog('destroy');  //销毁dialog对象
-            }
-        });
+    	ui_dg_add_edit('添加教师','ui_teacher','teacherServlet.do','teacherEdit.html','add',600,280);  
     }
     //修改用户
     function ui_teacher_edit() {
         var rows = $("#ui_teacher_dg").datagrid("getChecked");
         if (rows.length < 1) {
-            $.show_warning("提示", "请先勾选要修改的用户或者双击某个用户");
+            $.show_warning("提示", "请先勾选要修改的教师或者双击某位教师");
             return;
         }
         if (rows.length > 1) {
             $.show_warning("提示", "不支持批量修改");
             $("#ui_teacher_dg").datagrid('clearSelections').datagrid('clearChecked');
             return;
-        }
+        }        
         var row = rows[0];
-        $("<div/>").dialog({
-            id: "ui_teacher_edit_dialog",
-            href: "html/teacherEdit.html",
-            title: "修改用户",
-            iconCls: 'icon-edit',
-            height: 350,
-            width: 460,
-            modal: true,
-            buttons: [{
-                id: "ui_teacher_edit_btn",
-                iconCls: 'icon-edit',
-                text: '修 改',
-                handler: function () {
-                    $("#ui_teacher_editform").form("submit", {
-                        url:modeurl,
-                        onSubmit: function (param) {
-                            $('#ui_teacher_edit_btn').linkbutton('disable');   //点击就禁用按钮，防止连击
-                            param.action = 'edit';
-                            if ($(this).form('validate'))
-                                return true;
-                            else {
-                                $('#ui_teacher_edit_btn').linkbutton('enable');   //恢复按钮
-                                return false;
-                            }
-                        },
-                        success: function (data) {
-                            var dataJson = eval('(' + data + ')');    //转成json格式
-                            if (dataJson.success) {
-                                $("#ui_teacher_edit_dialog").dialog('destroy');  //销毁dialog对象
-                                $.show_warning("提示", "修改成功！");
-                                $("#ui_teacher_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
-                            } else {
-                                $('#ui_teacher_edit_btn').linkbutton('enable');    //恢复按钮
-                                $.show_warning("提示", dataJson.msg);
-                            }
-                        }
-                    });
-                }
-            }],
-            onLoad: function () {
-                $("#ui_teacher_id_edit").val(row.id);
-                $("#ui_teacher_username_edit").textbox("setValue", row.userName);
-                $("#ui_teacher_realname_edit").textbox("setValue", row.realName);
-                $("#ui_teacher_points_edit").numberbox("setValue", row.points);
-                $("#ui_teacher_tel_edit").textbox("setValue", row.tel);
-                if (row.status) {
-                    $("#ui_teacher_status_edit").attr("checked", "checked");
-                }
-                $("#ui_teacher_description_edit").val(row.description);
-            },
-            onClose: function () {
-                $("#ui_teacher_edit_dialog").dialog('destroy');  //销毁dialog对象
-            }
-        });
+        
+        ui_dg_add_edit('修改教师','ui_teacher','teacherServlet.do','teacherEdit.html','edit',600,280,
+        		null,
+        		function(){
+        			$("#ui_teacher_editform").form("load",row);
+        		}
+        );
     }
     //删除用户（可批量）
     function ui_teacher_delete() {
-        var rows = $("#ui_teacher_dg").datagrid("getChecked");
-        if (rows.length < 1) {
-            $.show_warning("提示", "请先勾选要删除的用户");
-            return;
-        }
-        $.messager.confirm('提示', '确定删除勾选的这' + rows.length + '个用户？', function (r) {
-            if (r) {
-                para = {};
-                para.action = "delete";
-                para.timespan = new Date().getTime();
-
-                var ids = [];
-                $.each(rows, function (i, row) {
-                    ids.push(row.id);
-                });
-                para.ids = ids.join(",");
-                $.ajax({
-                    url: modurl,
-                    data: para,
-                    type: "POST",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.success) {
-                            $.show_warning("提示", "删除成功！");
-                            $("#ui_teacher_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
-                        } else {
-                            $.show_warning("提示", data.msg);
-                        }
-                    }
-                });
-            }
-        });
+    	ui_dg_delete('教师','ui_teacher','teacherServlet.do');    
     }
     
     //角色设置（可批量）
     function ui_teacher_setrole() {
         var rows = $("#ui_teacher_dg").datagrid("getChecked");
         if (rows.length < 1) {
-            $.show_warning("提示", "请先勾选要设置角色的用户");
+            $.show_warning("提示", "请先勾选要设置角色的教师");
             return;
         }
         var row = rows[0];
         $("<div/>").dialog({
             id: "ui_teacher_setrole_dialog",
-            href: "html/teacherSetRole.html",
-            title: rows.length == 1 ? "设置角色" : "批量设置角色：" + rows.length + "个用户",
-            iconCls: "icon-key_go",
-            height: 220,
+            href: "teacherSetRole.html",
+            title: rows.length == 1 ? "设置角色" : "批量设置角色：" + rows.length + " 名教师",
+            iconCls: "icon-key",
+            height: 200,
             width: 380,
             modal: true,
             buttons: [{
                 id: "ui_teacher_setrole_btn",
                 text: '确 定',
+                iconCls:'icon-ok',
                 handler: function () {
                     $("#ui_teacher_setroleform").form("submit", {
                         url: modurl,
                         onSubmit: function (param) {
                             $('#ui_teacher_setrole_btn').linkbutton('disable');    //点击就禁用按钮，防止连击
-                            param.action = 'setrole';
+                            param.action = 'setRole';
                         },
                         success: function (data) {
                             var dataJson = JSON.parse(data);    //转成json格式
@@ -263,19 +135,19 @@
             }],
             onLoad: function () {
                 if (rows.length == 1) {   //如果是设置一个用户就自动勾选已经有的角色
-                    $('#ui_teacher_setrole_role').combobox('setValues', row.roleIds);
+                    $('#ui_teacher_setrole_role').combobox('setValue', row.roleId);
                     $("#ui_teacher_setrole_userid").val(row.id);
-                    $("#ui_teacher_setrole_username").val(row.userName);
+                    $("#ui_teacher_setrole_username").val(row.name+"【"+row.no+"】");
                 }
                 else {
-                    var userids = "";
-                    var usernames = "";
+                    var userids = [];
+                    var usernames = [];
                     for (var i = 0; i < rows.length; i++) {
-                        userids += rows[i].id + ",";
-                        usernames += rows[i].userName + ",";
+                    	userids.push(rows[i].id);
+                    	usernames.push(rows[i].name+"【"+rows[i].no+"】" );                        
                     }
-                    $("#ui_teacher_setrole_userid").val(userids.substring(0, userids.length - 1));
-                    $("#ui_teacher_setrole_username").val(usernames.substring(0, usernames.length - 1));
+                    $("#ui_teacher_setrole_userid").val(userids.join(','));
+                    $("#ui_teacher_setrole_username").val(usernames.join(','));
                 }
             },
             onClose: function () {
@@ -286,14 +158,14 @@
     function ui_teacher_searchdata() {
         var whereStr = "1=1";
         var no = $('#ui_teacher_search').find('[name=ui_teacher_no]').val();
-        var rname =  $('#ui_teacher_search').find('[name=ui_teacher_name]').val();        
+        var name =  $('#ui_teacher_search').find('[name=ui_teacher_name]').val();        
         var stime = $('#ui_teacher_regtime_start').datebox('getValue');
         var etime = $('#ui_teacher_regtime_end').datebox('getValue');
         if (no != "") {
-            whereStr += " and no='" + no + "'";
+            whereStr += " and no LIKE '%" + no + "%'";
         }
         if (name != "") {
-            whereStr += " and name='" + name + "'";
+            whereStr += " and name LIKE '%" + name + "%'";
         }        
         if (stime != "") {
             whereStr += " and regTime > '" + stime + "'";
@@ -303,7 +175,7 @@
         }
         $("#ui_teacher_dg").datagrid('load', {where:whereStr});
         $("#ui_teacher_dg").datagrid('clearSelections').datagrid('clearChecked');
-        //$('#ui_teacher_layout').layout('collapse', 'east');    //隐藏
+        $('#ui_teacher_layout').layout('collapse', 'west');    //隐藏
     }
     function ui_teacher_cleardata() {
         $('#ui_teacher_search input').val('');
@@ -313,7 +185,7 @@
         $("#ui_teacher_dg").datagrid('load', {});
 
         $("#ui_teacher_dg").datagrid('clearSelections').datagrid('clearChecked');
-        //$('#ui_teacher_layout').layout('collapse', 'east');    //隐藏
+        $('#ui_teacher_layout').layout('collapse', 'west');    //隐藏
     }
 </script>
 <div id="ui_teacher_layout" class="easyui-layout" data-options="fit:true,border:false">

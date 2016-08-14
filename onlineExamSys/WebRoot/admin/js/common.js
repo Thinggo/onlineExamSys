@@ -134,18 +134,18 @@ stringToList = function (value) {
  * fnLoad:对话框加载后执行的函数
  * 
  */
-ui_dg_add_edit = function(title,modname,submiturl,html,action,w,h,fnSuccess,fnLoad,fnValidate) {
+ui_dg_add_edit = function(title,modname,submiturl,html,action,w,h,fnSuccess,fnLoad,fnValidate) {	
     $("<div/>").dialog({
         id: modname+"_add_dialog",
         href: html,
         title: title,
-        iconCls: 'icon-add',
+        iconCls: action=='add'?'icon-add':'icon-edit',
         height: h,
         width: w,
         modal: true,
         buttons: [{
             id: modname+"_add_btn",
-            iconCls: 'icon-add',
+            iconCls: action=='add'?'icon-add':'icon-edit',
             text: action=='add'?'添 加':'修改',
             handler: function () {
                 $("#"+modname+"_editform").form("submit", {
@@ -184,11 +184,37 @@ ui_dg_add_edit = function(title,modname,submiturl,html,action,w,h,fnSuccess,fnLo
                 });
             }
         }],
-        onLoad: function () {
+        onLoad: function () {        	
         	if(fnLoad) fnLoad();
         },
         onClose: function () {
             $("#"+modname+"_add_dialog").dialog('destroy');  //销毁dialog对象
+        }
+    });
+}
+
+ui_common_dlg = function(title,modname,icon,btnname,html,action,w,h,fnHandler,fnLoad) {	
+    $("<div/>").dialog({
+        id: modname+"_common_dialog",
+        href: html,
+        title: title,
+        iconCls: icon,
+        height: h,
+        width: w,
+        modal: true,
+        buttons: [{
+            id: modname+"_common_btn",
+            iconCls: icon,
+            text:btnname ,
+            handler: function () {
+                if(fnHandler) fnHandler();
+            }
+        }],
+        onLoad: function () {        	
+        	if(fnLoad) fnLoad();
+        },
+        onClose: function () {
+            $("#"+modname+"_common_dialog").dialog('destroy');  //销毁dialog对象
         }
     });
 }
@@ -232,4 +258,5 @@ ui_dg_delete=function(title,modname,url,fnSuccess){
             });
         }
     });
-} 
+}
+
