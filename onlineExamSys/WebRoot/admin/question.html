@@ -16,15 +16,10 @@
 			editable : false,
 			icons : [ {
 				iconCls : 'icon-tip'
-			} ],
-			formatter : function(row) {
-				var s = '<span style="font-weight:bold">' + row.name
-						+ '</span><br/>';
-				return s;
-			},
+			} ] ,
 			onSelect : function(row) {				
 				$('#ui_question_dg_tb_unit').combotree( {
-					url : 'courseUnitServlet.do?action=list&courseId='+1,
+					url : 'courseUnitServlet.do?action=list&courseId='+row.id,
 					method : 'get',					
 					lines:true,	
 					panelHeight : 'auto',
@@ -32,13 +27,7 @@
 					icons : [ {
 						iconCls : 'icon-tip'
 					} ],
-					formatter : function(r) {
-						var s = '<span style="font-weight:bold">' + r.text
-								+ '</span><br/>';
-						return s;
-					},
-					onSelect : function(r) {	
-								
+					onSelect : function(r) {							
 					}
 				});
 			}
@@ -52,12 +41,7 @@
 			editable : false,
 			icons : [ {
 				iconCls : 'icon-tip'
-			} ],
-			formatter : function(row) {
-				var s = '<span style="font-weight:bold">' + row.typeName
-						+ '</span><br/>';
-				return s;
-			}
+			} ]
 		});
 	});
 		
@@ -82,7 +66,7 @@
                     }
                 }, 
                 { field: 'typeName', title: '试题内型', sortable: true,width: 80},
-                { field: 'defficulty', title: '难度系数', sortable: true, width: 80 },
+                { field: 'difficulty', title: '难度系数', sortable: true, width: 80 },
                 { field: 'courseName', title: '所属课程', sortable: true, width: 120},                
           		{ field: 'nuitName', title: '课程单元', sortable: true, width: 120 }          		
             ]],
@@ -122,11 +106,12 @@
 			icons : [ {
 				iconCls : 'icon-tip'
 			} ],
+			/*
 			formatter : function(row) {
 				var s = '<span style="font-weight:bold">' + row.name
 						+ '</span><br/>';
 				return s;
-			},
+			},*/
 			onSelect : function(row) {
 				$('#ui_question_course_unit').combotree( {
 					url : 'courseUnitServlet.do?action=list&courseId='+row.id,
@@ -135,12 +120,13 @@
 					editable : false,
 					icons : [ {
 						iconCls : 'icon-tip'
-					} ],
+					} ]
+					/*,
 					formatter : function(r) {
 						var s = '<span style="font-weight:bold">' + r.text
 								+ '</span><br/>';
 						return s;
-					}
+					}*/
 				});
 			}
 		});
@@ -155,11 +141,13 @@
 			icons : [ {
 				iconCls : 'icon-tip'
 			} ],
+			/*
 			formatter : function(row) {
 				var s = '<span style="font-weight:bold">' + row.typeName
 						+ '</span><br/>';
 				return s;
 			},
+			*/
 			onSelect : function(row) {
 				ui_question_option_init(row.typeId);				
 			}
@@ -357,7 +345,7 @@
             		$('#ui_question_questionType').combobox('setValue',question.typeId);
             		
             		$('#ui_question_difficulty').slider("setValue",question.defficulty);
-            		$('#hiddenExplain').val(question.explanin);
+            		$('#hiddenExplain').val(question.explain);
             		$('#hiddenQuestion').val(question.title);
             		ui_question_option_init(question.typeId,question);
 	            	ue.addListener("ready", function () {                    
@@ -411,18 +399,82 @@
             }
         });
 	}
-	function ui_question_search(){
+	
+	/*
+		导入试题	
+	*/
+	
+	function ui_question_import() {
+		var modname="ui_question";
+		$('<div/>').dialog({
+			id : modname + "_common_dialog",
+			href : 'upload.html',
+			title : '试题导入',
+			iconCls : 'icon-import',
+			height : 200,
+			width : 400,
+			modal : true,
+			buttons : [ {
+				id : modname + "_common_btn",
+				iconCls : 'icon-cancel',
+				text : '关闭',
+				handler : function() {
+					$("#" + modname + "_common_dialog").dialog('destroy');  
+				}
+			} ],
+			onLoad : function() {				
+				$('#ui_upload_file_template').attr('href','tpl/试题模板.xls');	
+				$('#ui_upload_importurl').val('questionServlet.do');				
+			},
+			onClose : function() {
+				 $("#ui_question_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
+				$("#" + modname + "_common_dialog").dialog('destroy'); //销毁dialog对象
+			}
+		});
+	}
+
+	function ui_question_export() {
+		var para = {};
+		para.action='export';
+		para.where = getWhere();;
+		$.ajax({
+			url:'questionServlet.do',
+			method:'POST',
+			dataType:'json',
+			data:para,
+			success:function(data){
+				if(data.success){
+					window.open(data.msg);
+				}else{
+					$.show_warning("提示",data.msg);
+				}
+			}
+		});
+	}
+
+	function getWhere(){
 		var where = "1=1";
 		var cid = $('#ui_question_dg_tb_course').combobox("getValue");
 		var uid = $('#ui_question_dg_tb_unit').combobox("getValue");
 		var tid = $('#ui_question_dg_tb_type').combobox("getValue");
 		var title = $('#ui_question_dg_tb_title').textbox("getValue");
-		if(cid) where += ' AND courseId='+cid;
-		if(uid) where += ' AND courseunitId='+uid;
-		if(tid) where += ' AND typeId='+tid;
-		
-		if(title && title.length>0)  where += " AND title like '%"+title+"%'";
-		$("#ui_question_dg").datagrid("load",{where:where}).datagrid('clearSelections').datagrid('clearChecked');;
+		if (cid)
+			where += ' AND courseId=' + cid;
+		if (uid)
+			where += ' AND courseunitId=' + uid;
+		if (tid)
+			where += ' AND typeId=' + tid;
+
+		if (title && title.length > 0)
+			where += " AND title like '%" + title + "%'";
+		return where;
+	}
+	function ui_question_search() {
+		var where = getWhere();
+		$("#ui_question_dg").datagrid("load", {
+			where : where
+		}).datagrid('clearSelections').datagrid('clearChecked');
+		;
 	}
 </script>
 <div id="ui_layout" class="easyui-layout"
@@ -431,11 +483,16 @@
 		<table id="ui_question_dg" data-options="fit:true,border:false">
         </table>
         <div id="ui_question_dg_tb">
+        	<div>
         	<a href="#" class="easyui-linkbutton" plain="true" data-options="iconCls:'icon-add'," onclick="ui_question_add()" >添加</a>
         	<a href="#" class="easyui-linkbutton" plain="true" data-options="iconCls:'icon-edit'" onclick="ui_question_edit()" >修改</a>
         	<a href="#" class="easyui-linkbutton" plain="true" data-options="iconCls:'icon-remove'" onclick="ui_question_delete()" >删除</a>
         	<a href="#" class="easyui-linkbutton" plain="true"  >|</a>
+        	<a href="#" class="easyui-linkbutton" plain="true" data-options="iconCls:'icon-import'" onclick="ui_question_import()" >导入</a>
+        	<a href="#" class="easyui-linkbutton" plain="true" data-options="iconCls:'icon-export'" onclick="ui_question_export()" >导出</a>
         	
+        	</div>
+        	<div>
 			课程: 
 			<input id="ui_question_dg_tb_course" />
 			单元:
@@ -447,7 +504,7 @@
 			试题内容:
 			<input class="easyui-textbox"  id="ui_question_dg_tb_title" />
 			<a href="#" class="easyui-linkbutton" onclick="ui_question_search()" iconCls="icon-search">查询</a>
-        	
+        	</div>
         </div>
 	</div>
 	<div id="question_view_div" style="padding:20px">

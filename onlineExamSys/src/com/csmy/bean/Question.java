@@ -23,10 +23,10 @@ public class Question  implements java.io.Serializable {
      private String  typeName;
      private Integer deleteFlag;
      private String answer;
-     private Integer defficulty;
-     private String explanin;
+     private Integer difficulty;
+     private String explain;
      private Integer teacherId;
-     private String  teacherNmae;
+     private String  teacherName;
      private Date createDate;
      private List<QuestionOption> list;
 
@@ -45,20 +45,7 @@ public class Question  implements java.io.Serializable {
         this.createDate = createDate;
     }
     
-    /** full constructor */
-    public Question(Integer id, String title, Integer courseId, Integer courseunitId, Integer typeId, Integer deleteFlag, String answer, Integer defficulty, String explanin, Integer teacherId, Date createDate) {
-        this.id = id;
-        this.title = title;
-        this.courseId = courseId;
-        this.courseunitId = courseunitId;
-        this.typeId = typeId;
-        this.deleteFlag = deleteFlag;
-        this.answer = answer;
-        this.defficulty = defficulty;
-        this.explanin = explanin;
-        this.teacherId = teacherId;
-        this.createDate = createDate;
-    }
+   
 
    
     // Property accessors
@@ -119,20 +106,20 @@ public class Question  implements java.io.Serializable {
         this.answer = answer;
     }
 
-    public Integer getDefficulty() {
-        return this.defficulty;
+    public Integer getDifficulty() {
+        return this.difficulty;
     }
     
-    public void setDefficulty(Integer defficulty) {
-        this.defficulty = defficulty;
+    public void setDifficulty(Integer defficulty) {
+        this.difficulty = defficulty;
     }
 
-    public String getExplanin() {
-        return this.explanin;
+    public String getExplain() {
+        return this.explain;
     }
     
-    public void setExplanin(String explanin) {
-        this.explanin = explanin;
+    public void setExplain(String explain) {
+        this.explain = explain;
     }
 
     public Integer getTeacherId() {
@@ -175,12 +162,12 @@ public class Question  implements java.io.Serializable {
 		this.typeName = typeName;
 	}
 
-	public String getTeacherNmae() {
-		return teacherNmae;
+	public String getTeacherName() {
+		return teacherName;
 	}
 
-	public void setTeacherNmae(String teacherNmae) {
-		this.teacherNmae = teacherNmae;
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
 	}
 
 	public List<QuestionOption> getList() {

@@ -22,6 +22,7 @@ public class QuestionOption  implements java.io.Serializable {
 
     /** default constructor */
     public QuestionOption() {
+    	isRight = (byte)0;
     }
 
 	/** minimal constructor */

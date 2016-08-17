@@ -100,36 +100,35 @@
 .icon-boss{background:url('icons/boss.png') no-repeat center center; }
 .icon-business{background:url('icons/business.png') no-repeat center center; }
 .icon-collapse{background:url('icons/collapse.png') no-repeat center center; }
+.icon-course{background:url('icons/course.png') no-repeat center center; }
 .icon-delete{background:url('icons/delete3.png') no-repeat center center; }
 .icon-expand{background:url('icons/expand.png') no-repeat center center; }
 .icon-export{background:url('icons/export.png') no-repeat center center; }
 .icon-extract{background:url('icons/extract.png') no-repeat center center; }
-.icon-group{background:url('icons/group.png') no-repeat center center; }
+
 .icon-exam{background:url('icons/grave.png') no-repeat center center; }
-.icon-course{background:url('icons/course.png') no-repeat center center; }
+
+
+.icon-group{background:url('icons/group.png') no-repeat center center; }
+.icon-import{background:url('icons/import.png') no-repeat center center; }
 .icon-key{background:url('icons/key.png') no-repeat center center; }
 .icon-log{background:url('icons/log.png') no-repeat center center; }
 .icon-login{background:url('icons/login.png') no-repeat center center; }
 .icon-link{background:url('icons/link.png') no-repeat center center; }
 
 .icon-menu{background:url('icons/menu.png') no-repeat center center; }
-.icon-notice{background:url('icons/user_edit.png') no-repeat center center; }
-.icon-process{background:url('icons/paradise.png') no-repeat center center; }
-.icon-room{background:url('icons/paradise.png') no-repeat center center; }
-.icon-paradise_set{background:url('icons/paradise_set.png') no-repeat center center; }
+.icon-plan{background:url('icons/rtask.png') no-repeat center center; }
+.icon-question{background:url('icons/report.png') no-repeat center center; }
 .icon-refresh{background:url('icons/refresh.png') no-repeat center center; }
 .icon-role{background:url('icons/role.png') no-repeat center center; }
-.icon-question{background:url('icons/report.png') no-repeat center center; }
-.icon-relative{background:url('icons/relative.png') no-repeat center center; }
-.icon-plan{background:url('icons/rtask.png') no-repeat center center; }
-.icon-set{background:url('icons/setting.png') no-repeat center center; }
+.icon-room{background:url('icons/store.png') no-repeat center center; }
+.icon-seat{background:url('icons/setting.png') no-repeat center center; }
 .icon-stop{background:url('icons/stop.png') no-repeat center center; }
 .icon-strategy{background:url('icons/sale.png') no-repeat center center; }
-.icon-store{background:url('icons/store.png') no-repeat center center; }
 .icon-table{background:url('icons/table.png') no-repeat center center; }
 .icon-task{background:url('icons/task.png') no-repeat center center; }
 .icon-tel{ background:url('icons/tel.png') no-repeat center center; }
-.icon-upload{background:url('icons/upload.png') no-repeat center center; }
 .icon-student{background:url('icons/users.png') no-repeat center center; }
+.icon-upload{background:url('icons/upload.png') no-repeat center center; }
 .icon-user{background:url('icons/user.png') no-repeat center center; }
 .icon-user_edit{background:url('icons/user_edit.png') no-repeat center center; }

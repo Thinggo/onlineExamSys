@@ -1,14 +1,10 @@
 package com.csmy.servlet;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +16,7 @@ import com.csmy.bean.QuestionType;
 import com.csmy.bean.ResultModel;
 import com.csmy.bean.Teacher;
 import com.csmy.service.QuestionService;
+import com.csmy.utils.MyProgressListener;
 import com.csmy.utils.Utils;
 
 /**
@@ -141,8 +138,8 @@ public class QuestionServlet extends BaseServlet {
 			question.setTitle(title);			
 			question.setCourseId(Integer.parseInt(courseId));
 			question.setCourseunitId(Integer.parseInt(courseunitId));
-			question.setDefficulty(Integer.parseInt(difficulty));
-			question.setExplanin(explain);
+			question.setDifficulty(Integer.parseInt(difficulty));
+			question.setExplain(explain);
 			Teacher currentUser = Utils.getCurrentUser(req);
 			question.setTeacherId(currentUser.getId());
 
@@ -219,8 +216,8 @@ public class QuestionServlet extends BaseServlet {
 			question.setTitle(title);			
 			question.setCourseId(Integer.parseInt(courseId));
 			question.setCourseunitId(Integer.parseInt(courseunitId));
-			question.setDefficulty(Integer.parseInt(difficulty));
-			question.setExplanin(explain);
+			question.setDifficulty(Integer.parseInt(difficulty));
+			question.setExplain(explain);
 			Teacher currentUser = Utils.getCurrentUser(req);
 			question.setTeacherId(currentUser.getId());
 
@@ -282,6 +279,45 @@ public class QuestionServlet extends BaseServlet {
 		} catch (Exception e) {			
 			e.printStackTrace();
 			out.println("{total:0,rows:[]}");
+		}
+		out.flush();
+	}
+	@Override
+	protected void export(HttpServletRequest req, HttpServletResponse resp) {
+		PagerModel<Question>  pm = null;
+		PrintWriter out = null;
+		try {			
+			out = resp.getWriter();
+			String where = req.getParameter("where");
+			
+			String excelfile = questionService.export(where);
+			ResultModel rm = new ResultModel(0,excelfile);
+			String json = Utils.toJson(rm);		
+			out.print(json);
+		} catch (Exception e) {			
+			ResultModel rm = new ResultModel(1,e.getMessage());
+			String json = Utils.toJson(rm);		
+			out.print(json);
+		}
+		out.flush();
+	}
+	@Override
+	protected void importfile(HttpServletRequest req, HttpServletResponse resp) {
+		PagerModel<Question>  pm = null;
+		PrintWriter out = null;
+		try {			
+			out = resp.getWriter();
+			String filename = req.getParameter("filename");
+			Teacher user = Utils.getCurrentUser(req);
+			MyProgressListener listener = new MyProgressListener(req);
+			String excelfile = questionService.importfile(filename,user.getId(),listener);
+			ResultModel rm = new ResultModel(0,excelfile);
+			String json = Utils.toJson(rm);		
+			out.print(json);
+		} catch (Exception e) {			
+			ResultModel rm = new ResultModel(1,e.getMessage());
+			String json = Utils.toJson(rm);		
+			out.print(json);
 		}
 		out.flush();
 	}	
