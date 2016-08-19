@@ -1,4 +1,4 @@
-package com.csmy.bean;
+package com.csmy.vo;
 
 public class ResultModel {
 	private int status;

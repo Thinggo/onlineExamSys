@@ -2,8 +2,8 @@ package com.csmy.service;
 import java.util.List;
 
 import com.csmy.bean.Course;
-import com.csmy.bean.PagerModel;
 import com.csmy.dao.CourseDao;
+import com.csmy.vo.PagerModel;
 
 public class CourseService {
 	private CourseDao courseDao = new CourseDao();

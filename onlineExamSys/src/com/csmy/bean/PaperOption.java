@@ -12,7 +12,9 @@ public class PaperOption  implements java.io.Serializable {
 
      private Integer id;
      private Integer paperDetailId;
-     private Integer optionId;
+     private Integer optionId; //试题选项ID
+     private String  questionOptionName;
+     private Byte isright;
      private String label;
 
 
@@ -65,6 +67,26 @@ public class PaperOption  implements java.io.Serializable {
     public void setLabel(String label) {
         this.label = label;
     }
+
+
+	public Byte getIsright() {
+		return isright;
+	}
+
+
+	public void setIsright(Byte isright) {
+		this.isright = isright;
+	}
+
+
+	public String getQuestionOptionName() {
+		return questionOptionName;
+	}
+
+
+	public void setQuestionOptionName(String questionOptionName) {
+		this.questionOptionName = questionOptionName;
+	}
    
 
 

@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.csmy.bean.Course;
-import com.csmy.bean.PagerModel;
-import com.csmy.bean.PagerModel2;
-import com.csmy.bean.ResultModel;
 import com.csmy.bean.Teacher;
 import com.csmy.service.CourseService;
 import com.csmy.utils.Utils;
+import com.csmy.vo.PagerModel;
+import com.csmy.vo.PagerModel2;
+import com.csmy.vo.ResultModel;
 @WebServlet("/admin/courseServlet.do")
 public class CourseServlet extends BaseServlet {
 	
@@ -93,7 +93,7 @@ public class CourseServlet extends BaseServlet {
 			ResultModel rm = new ResultModel(0,"删除成功！");
 			json = Utils.toJson(rm);
 		} catch (Exception e) {
-			ResultModel rm = new ResultModel(1,"修改失败！");
+			ResultModel rm = new ResultModel(1,"删除失败！");
 			json = Utils.toJson(rm);	
 			e.printStackTrace();
 		}

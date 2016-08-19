@@ -1,4 +1,4 @@
-package com.csmy.bean;
+package com.csmy.vo;
 
 import java.util.List;
 

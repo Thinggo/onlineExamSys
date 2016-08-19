@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.csmy.bean.*;
 import com.csmy.db.DbConn;
+import com.csmy.vo.PagerModel;
 
 public class QuestionDao {
 	private  String colums=" id "

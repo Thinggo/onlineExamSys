@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.csmy.bean.*;
 import com.csmy.db.*;
+import com.csmy.vo.PagerModel;
 public class CourseDao {
 	private String column="id"
 			+ " ,code"

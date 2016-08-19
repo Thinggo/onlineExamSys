@@ -411,8 +411,8 @@
 			href : 'upload.html',
 			title : '试题导入',
 			iconCls : 'icon-import',
-			height : 200,
-			width : 400,
+			height : 220,
+			width : 380,
 			modal : true,
 			buttons : [ {
 				id : modname + "_common_btn",
@@ -433,23 +433,51 @@
 		});
 	}
 
-	function ui_question_export() {
-		var para = {};
-		para.action='export';
-		para.where = getWhere();;
-		$.ajax({
-			url:'questionServlet.do',
-			method:'POST',
-			dataType:'json',
-			data:para,
-			success:function(data){
-				if(data.success){
-					window.open(data.msg);
-				}else{
-					$.show_warning("提示",data.msg);
+	function ui_question_export() {		
+		
+		$('<div/>').dialog({			
+			id : "ui_question_common_dialog",
+			href : 'export.html',
+			title : '试题导出',
+			iconCls : 'icon-export',
+			height : 150,
+			width : 320,
+			modal : true,
+			buttons : [ {				
+				iconCls : 'icon-cancel',
+				text : '关闭',
+				handler : function() {
+					$("#ui_question_common_dialog").dialog('destroy'); //销毁dialog对象	
 				}
+			} ],
+			onLoad : function() {	
+				$('#ui_export_hitting').text('正在导出文件，请稍候...');
+				$('#ui_export_download').hide();
+				var para = {};
+				para.action='export';
+				para.where = getWhere();
+				$.ajax({
+					url:'questionServlet.do',
+					method:'POST',
+					dataType:'json',
+					data:para,
+					success:function(data){
+						if(data.success){
+							$('#ui_export_hitting').text('导出结束，请点击文件下载！');
+							$('#ui_export_url').attr("href",data.msg);
+							$('#ui_export_url').text(data.msg);
+							$('#ui_export_download').show();
+							
+						}else{
+							$.show_warning("提示",data.msg);
+						}
+					}
+				});	
+			},
+			onClose : function() {
+				$("#ui_question_common_dialog").dialog('destroy'); //销毁dialog对象
 			}
-		});
+		});			
 	}
 
 	function getWhere(){
@@ -496,7 +524,7 @@
 			课程: 
 			<input id="ui_question_dg_tb_course" />
 			单元:
-			<input id="ui_question_dg_tb_unit"  />
+			<input id="ui_question_dg_tb_unit" class="easyui-combobox"  />
 			<img style="cursor: pointer; vertical-align: middle;" onclick="$('#ui_question_dg_tb_unit').combotree('clear');"
                         alt="清空单元" title="清空单元" src="easyui/themes/icons/edit-clear.png" />
 			题型:
@@ -513,4 +541,6 @@
 		<div id="view_question_answer" style="padding-top:10px;clear:both"></div>
 		<div id="view_question_explain" style="padding-top:10px;clear:both"></div>
 	</div>
+	
+	
 </div>
