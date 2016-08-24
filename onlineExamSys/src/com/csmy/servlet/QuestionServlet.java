@@ -16,6 +16,7 @@ import com.csmy.bean.Question;
 import com.csmy.bean.QuestionOption;
 import com.csmy.bean.QuestionType;
 import com.csmy.bean.Teacher;
+import com.csmy.bean.User;
 import com.csmy.service.QuestionService;
 import com.csmy.utils.MyProgressListener;
 import com.csmy.utils.Utils;
@@ -145,7 +146,7 @@ public class QuestionServlet extends BaseServlet {
 			question.setCourseunitId(Integer.parseInt(courseunitId));
 			question.setDifficulty(Integer.parseInt(difficulty));
 			question.setExplain(explain);
-			Teacher currentUser = Utils.getCurrentUser(req);
+			User currentUser = Utils.getCurrentUser(req);
 			question.setTeacherId(currentUser.getId());
 
 			if(questionTypeId==1 || questionTypeId == 2){
@@ -223,7 +224,7 @@ public class QuestionServlet extends BaseServlet {
 			question.setCourseunitId(Integer.parseInt(courseunitId));
 			question.setDifficulty(Integer.parseInt(difficulty));
 			question.setExplain(explain);
-			Teacher currentUser = Utils.getCurrentUser(req);
+			User currentUser = Utils.getCurrentUser(req);
 			question.setTeacherId(currentUser.getId());
 
 			if(questionTypeId==1 || questionTypeId == 2){
@@ -277,7 +278,7 @@ public class QuestionServlet extends BaseServlet {
 		try {			
 			out = resp.getWriter();
 			PagerModel2 pm2 = Utils.formToBean(req, PagerModel2.class);
-			Teacher user = Utils.getCurrentUser(req);
+			User user = Utils.getCurrentUser(req);
 			pm = questionService.search(user.getId(),pm2.getSort()+" "+pm2.getOrder(), pm2.getPageSize(), pm2.getPageIndex(), pm2.getWhere());
 			String json = Utils.toJson(pm);
 			out.println(json);
@@ -318,7 +319,7 @@ public class QuestionServlet extends BaseServlet {
 		try {			
 			out = resp.getWriter();
 			String filename = req.getParameter("filename");
-			Teacher user = Utils.getCurrentUser(req);
+			User user = Utils.getCurrentUser(req);
 			MyProgressListener listener = new MyProgressListener(req);
 			String path = req.getRealPath("admin/")+"/"+filename;
 			questionService.importfile(path,user.getId(),listener);

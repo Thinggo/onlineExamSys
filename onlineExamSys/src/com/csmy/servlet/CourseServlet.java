@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.csmy.bean.Course;
 import com.csmy.bean.Teacher;
+import com.csmy.bean.User;
 import com.csmy.service.CourseService;
 import com.csmy.utils.Utils;
 import com.csmy.vo.PagerModel;
@@ -54,7 +55,7 @@ public class CourseServlet extends BaseServlet {
 		PrintWriter out = null;
 		try {				
 			out = resp.getWriter();
-			Teacher user = Utils.getCurrentUser(req);
+			User user = Utils.getCurrentUser(req);
 			list = courseService.list(user.getDeptId());
 			String json = Utils.toJson(list);
 			out.println(json);
@@ -71,7 +72,7 @@ public class CourseServlet extends BaseServlet {
 		try {			
 			 out = resp.getWriter();
 			PagerModel2 pm2 = Utils.formToBean(req, PagerModel2.class);
-			Teacher user = Utils.getCurrentUser(req);
+			User user = Utils.getCurrentUser(req);
 			pm = courseService.search(user.getId(),pm2.getSort()+" "+pm2.getOrder(), pm2.getPageSize(), pm2.getPageIndex(), pm2.getWhere());			
 			String json = Utils.toJson(pm);
 			out.println(json);
@@ -108,7 +109,7 @@ public class CourseServlet extends BaseServlet {
 		try {			
 			out = resp.getWriter();
 			c = Utils.formToBean(req, Course.class);	
-			Teacher currentUser = Utils.getCurrentUser(req);
+			User currentUser = Utils.getCurrentUser(req);
 			c.setTeacherid(currentUser.getId());
 			c.setDepartmentid(currentUser.getDeptId());
 			courseService.update(c);
@@ -131,7 +132,7 @@ public class CourseServlet extends BaseServlet {
 		String json = null;
 		try {			
 			out = resp.getWriter();
-			Teacher currentUser = Utils.getCurrentUser(req);
+			User currentUser = Utils.getCurrentUser(req);
 			c.setTeacherid(currentUser.getId());
 			c.setDepartmentid(currentUser.getDeptId());
 			courseService.insert(c);

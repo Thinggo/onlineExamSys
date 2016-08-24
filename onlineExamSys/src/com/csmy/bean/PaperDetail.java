@@ -13,7 +13,7 @@ public class PaperDetail  implements java.io.Serializable {
 
     // Fields    
 
-     private Integer pagerId;
+     private Integer paperId;
      private Integer studentId;
      private String  studentName;
      private Integer planId;
@@ -39,8 +39,8 @@ public class PaperDetail  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public PaperDetail(Integer pagerId, Integer studentId, Integer planId, Integer questionId, Integer displayId) {
-        this.pagerId = pagerId;
+    public PaperDetail(Integer paperId, Integer studentId, Integer planId, Integer questionId, Integer displayId) {
+        this.paperId = paperId;
         this.studentId = studentId;
         this.planId = planId;
         this.questionId = questionId;
@@ -48,8 +48,8 @@ public class PaperDetail  implements java.io.Serializable {
     }
     
     /** full constructor */
-    public PaperDetail(Integer pagerId, Integer studentId, Integer planId, Integer questionId, Integer displayId, String answer, Double score, Integer teacherId, Date markingTime, Byte flag) {
-        this.pagerId = pagerId;
+    public PaperDetail(Integer paperId, Integer studentId, Integer planId, Integer questionId, Integer displayId, String answer, Double score, Integer teacherId, Date markingTime, Byte flag) {
+        this.paperId = paperId;
         this.studentId = studentId;
         this.planId = planId;
         this.questionId = questionId;
@@ -64,12 +64,12 @@ public class PaperDetail  implements java.io.Serializable {
    
     // Property accessors
 
-    public Integer getPagerId() {
-        return this.pagerId;
+    public Integer getPaperId() {
+        return this.paperId;
     }
     
-    public void setPagerId(Integer pagerId) {
-        this.pagerId = pagerId;
+    public void setPaperId(Integer paperId) {
+        this.paperId = paperId;
     }
 
     public Integer getStudentId() {

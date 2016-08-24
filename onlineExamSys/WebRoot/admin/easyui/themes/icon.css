@@ -102,11 +102,12 @@
 .icon-collapse{background:url('icons/collapse.png') no-repeat center center; }
 .icon-course{background:url('icons/course.png') no-repeat center center; }
 .icon-delete{background:url('icons/delete3.png') no-repeat center center; }
+.icon-delay{background:url('icons/delay.png') no-repeat center center; }
 .icon-expand{background:url('icons/expand.png') no-repeat center center; }
 .icon-export{background:url('icons/export.png') no-repeat center center; }
 .icon-extract{background:url('icons/extract.png') no-repeat center center; }
 
-.icon-exam{background:url('icons/grave.png') no-repeat center center; }
+.icon-exam{background:url('icons/exam.png') no-repeat center center; }
 
 
 .icon-group{background:url('icons/group.png') no-repeat center center; }

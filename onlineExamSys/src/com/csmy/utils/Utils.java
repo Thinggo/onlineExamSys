@@ -12,6 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 
 import com.csmy.bean.Teacher;
+import com.csmy.bean.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,9 +21,9 @@ public class Utils {
 		// 在封装之前 注册转换器
 		ConvertUtils.register(new DateTimeConverter(), java.util.Date.class);
 	}
-	private final static String CURRENT_USER_KEY="ONLINE_EXAM_CURRENT_USER_KEY";
-	public static Teacher getCurrentUser(HttpServletRequest request){
-		Teacher user = (Teacher) request.getSession().getAttribute(CURRENT_USER_KEY);
+	public final static String CURRENT_USER_KEY="ONLINE_EXAM_CURRENT_USER_KEY";
+	public static User getCurrentUser(HttpServletRequest request){
+		User user = (User) request.getSession().getAttribute(CURRENT_USER_KEY);
 		if(user==null){
 			user = new Teacher();
 			user.setId(1);
@@ -33,9 +34,11 @@ public class Utils {
 		return user;
 	}
 	
-	public static void setCurrentUser(HttpServletRequest request,Teacher user){
+	public static void setCurrentUser(HttpServletRequest request,User user){
 		request.getSession().setAttribute(CURRENT_USER_KEY,user);
 	}
+	
+	
 	
 	/**
 	 * 请求信息封装到对象
