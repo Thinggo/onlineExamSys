@@ -1,5 +1,6 @@
 package com.csmy.bean;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 
@@ -112,7 +113,7 @@ public class PaperDetail  implements java.io.Serializable {
         this.answer = answer;
     }
 
-    public Double getScore() {
+    public Double getScore() {    	
         return this.score;
     }
     

@@ -18,6 +18,11 @@ public class ExamPlan  implements java.io.Serializable {
      private Integer strategyId;
      private String strategyName;
      private Date beginTime;
+     private Integer duration;
+     private Byte examPattern;
+     private Byte isShowResult;
+     private Byte isArrangeRoom;
+          
      private Integer teacherId;
      private String teacherName;
      private Date createTime;
@@ -109,7 +114,37 @@ public class ExamPlan  implements java.io.Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-    
-     
-  
+
+	public Integer getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+
+	public Byte getExamPattern() {
+		return examPattern;
+	}
+
+	public void setExamPattern(Byte examPattern) {
+		this.examPattern = examPattern;
+	}
+
+	public Byte getIsShowResult() {
+		return isShowResult;
+	}
+
+	public void setIsShowResult(Byte isShowResult) {
+		this.isShowResult = isShowResult;
+	}
+
+	public Byte getIsArrangeRoom() {
+		return isArrangeRoom;
+	}
+
+	public void setIsArrangeRoom(Byte isArrangeRoom) {
+		this.isArrangeRoom = isArrangeRoom;
+	}
+
 }

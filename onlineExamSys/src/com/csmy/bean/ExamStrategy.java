@@ -19,14 +19,13 @@ public class ExamStrategy  implements java.io.Serializable {
      private Integer totalScore;
      private Integer passScore;
      private Byte strategystatus;
-     private Date createtime;
+     
    
-     private Byte examPattern;
-     private Byte isShowResult;
-     private Byte isArrangeRoom;
+
+     
      private Integer teacherId;
      private String teacherName;
-     private Integer duration;
+     private Date createtime;
 
 
 
@@ -108,32 +107,6 @@ public class ExamStrategy  implements java.io.Serializable {
         this.createtime = createtime;
     }
 
-    
-
-    public Byte getExamPattern() {
-        return this.examPattern;
-    }
-    
-    public void setExamPattern(Byte examPattern) {
-        this.examPattern = examPattern;
-    }
-
-    public Byte getIsShowResult() {
-        return this.isShowResult;
-    }
-    
-    public void setIsShowResult(Byte isShowResult) {
-        this.isShowResult = isShowResult;
-    }
-
-    public Byte getIsArrangeRoom() {
-        return this.isArrangeRoom;
-    }
-    
-    public void setIsArrangeRoom(Byte isArrangeRoom) {
-        this.isArrangeRoom = isArrangeRoom;
-    }
-
     public Integer getTeacherId() {
         return this.teacherId;
     }
@@ -150,13 +123,7 @@ public class ExamStrategy  implements java.io.Serializable {
 		this.teacherName = teacherName;
 	}
 
-	public Integer getDuration() {
-        return this.duration;
-    }
-    
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
+	
 
 	@Override
 	public String toString() {
@@ -164,11 +131,8 @@ public class ExamStrategy  implements java.io.Serializable {
 				+ courseId + ", CourseName=" + courseName + ", totalScore="
 				+ totalScore + ", passScore=" + passScore + ", strategystatus="
 				+ strategystatus + ", createtime=" + createtime
-				+ ", isDiffOrunit="  + ", examPattern="
-				+ examPattern + ", isShowResult=" + isShowResult
-				+ ", isArrangeRoom=" + isArrangeRoom + ", teacherId="
-				+ teacherId + ", TeacherName=" + teacherName + ", duration="
-				+ duration + "]";
+				+ ", isDiffOrunit="  + ", teacherId="
+				+ teacherId + ", TeacherName=" + teacherName  + "]";
 	}
     
 }

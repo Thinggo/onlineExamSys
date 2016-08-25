@@ -419,6 +419,7 @@
 				iconCls : 'icon-cancel',
 				text : '关闭',
 				handler : function() {
+					$("#ui_question_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');					
 					$("#" + modname + "_common_dialog").dialog('destroy');  
 				}
 			} ],
@@ -427,7 +428,6 @@
 				$('#ui_upload_importurl').val('questionServlet.do');				
 			},
 			onClose : function() {
-				 $("#ui_question_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
 				$("#" + modname + "_common_dialog").dialog('destroy'); //销毁dialog对象
 			}
 		});

@@ -101,7 +101,8 @@
 .icon-business{background:url('icons/business.png') no-repeat center center; }
 .icon-collapse{background:url('icons/collapse.png') no-repeat center center; }
 .icon-course{background:url('icons/course.png') no-repeat center center; }
-.icon-delete{background:url('icons/delete3.png') no-repeat center center; }
+.icon-delete3{background:url('icons/delete3.png') no-repeat center center; }
+.icon-delete{background:url('icons/delete.png') no-repeat center center; }
 .icon-delay{background:url('icons/delay.png') no-repeat center center; }
 .icon-expand{background:url('icons/expand.png') no-repeat center center; }
 .icon-export{background:url('icons/export.png') no-repeat center center; }
@@ -112,11 +113,13 @@
 
 .icon-group{background:url('icons/group.png') no-repeat center center; }
 .icon-import{background:url('icons/import.png') no-repeat center center; }
+.icon-judge{background:url('icons/judge.png') no-repeat center center; }
 .icon-key{background:url('icons/key.png') no-repeat center center; }
 .icon-log{background:url('icons/log.png') no-repeat center center; }
 .icon-login{background:url('icons/login.png') no-repeat center center; }
 .icon-link{background:url('icons/link.png') no-repeat center center; }
-
+.icon-machine{background:url('icons/machine.png') no-repeat center center; }
+.icon-mark{background:url('icons/mark.png') no-repeat center center; }
 .icon-menu{background:url('icons/menu.png') no-repeat center center; }
 .icon-plan{background:url('icons/rtask.png') no-repeat center center; }
 .icon-question{background:url('icons/report.png') no-repeat center center; }
@@ -124,6 +127,8 @@
 .icon-role{background:url('icons/role.png') no-repeat center center; }
 .icon-room{background:url('icons/store.png') no-repeat center center; }
 .icon-seat{background:url('icons/setting.png') no-repeat center center; }
+.icon-set{background:url('icons/setting.png') no-repeat center center; }
+.icon-score{background:url('icons/score.png') no-repeat center center; }
 .icon-stop{background:url('icons/stop.png') no-repeat center center; }
 .icon-strategy{background:url('icons/sale.png') no-repeat center center; }
 .icon-table{background:url('icons/table.png') no-repeat center center; }

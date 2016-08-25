@@ -63,7 +63,7 @@ public class Utils {
 		
 	public static String toJson(Object obj) {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").excludeFieldsWithModifiers(Modifier.PUBLIC)
-				.create();
+				.create();		
 		String json = gson.toJson(obj);		
 		return json;
 	}
