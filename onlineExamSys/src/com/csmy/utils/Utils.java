@@ -1,6 +1,5 @@
 package com.csmy.utils;
 
-import java.io.Serializable;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -21,7 +20,7 @@ public class Utils {
 		// 在封装之前 注册转换器
 		ConvertUtils.register(new DateTimeConverter(), java.util.Date.class);
 	}
-	public final static String CURRENT_USER_KEY="ONLINE_EXAM_CURRENT_USER_KEY";
+	private final static String CURRENT_USER_KEY="ONLINE_EXAM_CURRENT_USER_KEY";
 	public static User getCurrentUser(HttpServletRequest request){
 		User user = (User) request.getSession().getAttribute(CURRENT_USER_KEY);
 		if(user==null){
@@ -38,6 +37,20 @@ public class Utils {
 		request.getSession().setAttribute(CURRENT_USER_KEY,user);
 	}
 	
+	private final static String CURRENT_PLAN_KEY = "ONLINE_EXAM_CURRENT_PLAN_KEY";
+	
+	public static void setPlanId(HttpServletRequest request,int planId){
+		request.getSession().setAttribute(CURRENT_PLAN_KEY,planId);
+	}
+	
+	public static int getPlanId(HttpServletRequest request){
+		 Object planId =  request.getSession().getAttribute(CURRENT_PLAN_KEY);
+		if(planId==null){
+			return 0;
+		}else{
+			return (int)planId;
+		}		
+	}
 	
 	
 	/**

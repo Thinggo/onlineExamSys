@@ -96,7 +96,9 @@
 }
 
 .icon-assign{background:url('icons/users.png') no-repeat center center; }
+.icon-audit{background:url('icons/authorize.png') no-repeat center center; }
 .icon-authorize{background:url('icons/authorize.png') no-repeat center center; }
+.icon-backup{background:url('icons/backup.png') no-repeat center center; }
 .icon-boss{background:url('icons/boss.png') no-repeat center center; }
 .icon-business{background:url('icons/business.png') no-repeat center center; }
 .icon-collapse{background:url('icons/collapse.png') no-repeat center center; }
@@ -123,6 +125,7 @@
 .icon-menu{background:url('icons/menu.png') no-repeat center center; }
 .icon-plan{background:url('icons/rtask.png') no-repeat center center; }
 .icon-question{background:url('icons/report.png') no-repeat center center; }
+.icon-restore{background:url('icons/restore.png') no-repeat center center; }
 .icon-refresh{background:url('icons/refresh.png') no-repeat center center; }
 .icon-role{background:url('icons/role.png') no-repeat center center; }
 .icon-room{background:url('icons/store.png') no-repeat center center; }

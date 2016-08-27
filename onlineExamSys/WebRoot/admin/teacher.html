@@ -158,7 +158,8 @@
     function ui_teacher_searchdata() {
         var whereStr = "1=1";
         var no = $('#ui_teacher_search').find('[name=ui_teacher_no]').val();
-        var name =  $('#ui_teacher_search').find('[name=ui_teacher_name]').val();        
+        var name =  $('#ui_teacher_search').find('[name=ui_teacher_name]').val();       
+        var deptId = $('#ui_student_dept_search').combotree("getValue");
         var stime = $('#ui_teacher_regtime_start').datebox('getValue');
         var etime = $('#ui_teacher_regtime_end').datebox('getValue');
         if (no != "") {
@@ -173,6 +174,9 @@
         if (etime != "") {
             whereStr += " and regTime < '" + etime + "'";
         }
+        if(deptId>0){
+       	 whereStr += " and deptId = " + deptId  ;
+       }
         $("#ui_teacher_dg").datagrid('load', {where:whereStr});
         $("#ui_teacher_dg").datagrid('clearSelections').datagrid('clearChecked');
         $('#ui_teacher_layout').layout('collapse', 'west');    //隐藏
@@ -180,8 +184,7 @@
     function ui_teacher_cleardata() {
         $('#ui_teacher_search input').val('');
         $('#ui_teacher_search select').val('select');
-        $('#ui_teacher_regtime_start').datebox('setValue', '');
-        $('#ui_teacher_regtime_end').datebox('setValue', '');
+        
         $("#ui_teacher_dg").datagrid('load', {});
 
         $("#ui_teacher_dg").datagrid('clearSelections').datagrid('clearChecked');
@@ -206,7 +209,17 @@
                     <td>
                         <input name="ui_teacher_name" class="easyui-textbox"  autocomplete="off" style="width: 130px;" />
                     </td>
-                </tr>                                
+                </tr>   
+                <tr>
+                    <th>部门：
+                    </th>
+                    <td>
+                        <input class="easyui-combotree" id="ui_teacher_dept_search" name="deptId"
+                    data-options="url:'departmentServlet.do?action=list',lines:true,editable:false,panelHeight:'auto'" />
+                    <img style="cursor: pointer; vertical-align: middle;" onclick="$('#ui_teacher_dept_search').combotree('clear');"
+                        alt="清空部门" title="清空部门" src="easyui/themes/icons/edit-clear.png" />
+                    </td>
+                </tr>                                 
                 <tr>
                     <th>注册时间：
                     </th>
