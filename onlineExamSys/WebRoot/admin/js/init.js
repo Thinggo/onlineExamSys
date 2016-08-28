@@ -159,7 +159,7 @@ function loginOut() {
     if (confirm("确定退出当前陆登账户？")) {
         var para = { "action": "logout" };
         $.ajax({
-            url: "ashx/rm_login.ashx",
+            url: "teacherServlet.do",
             type: "post",
             data: para,
             dataType: "json",

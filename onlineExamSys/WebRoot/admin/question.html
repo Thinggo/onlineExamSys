@@ -33,7 +33,7 @@
 			}
 		});			
 		$('#ui_question_dg_tb_type').combobox( {
-			url : 'questionServlet.do?action=questionType',
+			url : 'questionServlet.do?action=listQuestionType',
 			method : 'get',
 			valueField : 'typeId',
 			textField : 'typeName',
@@ -132,7 +132,7 @@
 		});
 		
 		$('#ui_question_questionType').combobox({
-			url : 'questionServlet.do?action=questionType',
+			url : 'questionServlet.do?action=listQuestionType',
 			method : 'get',
 			valueField : 'typeId',
 			textField : 'typeName',
@@ -336,7 +336,8 @@
             onLoad: function () {  
             	
             	ui_question_init_editor();
-            	var ue = UE.getEditor('ui_exam_editor');    
+            	var ue = UE.getEditor('ui_exam_editor');  
+            	
             	$('#hiddenQuestionId').val(question.id);
             	$('#btn_question_question').linkbutton({iconCls:"icon-edit"});    
             	$('#ui_question_questionType').combobox('setValue',1);
@@ -464,7 +465,7 @@
 					success:function(data){
 						if(data.success){
 							$('#ui_export_hitting').text('导出结束，请点击文件下载！');
-							$('#ui_export_url').attr("href",data.msg);
+							$('#ui_export_url').attr("href","downloadServlet.do?action=download&filename="+data.msg);
 							$('#ui_export_url').text(data.msg);
 							$('#ui_export_download').show();
 							

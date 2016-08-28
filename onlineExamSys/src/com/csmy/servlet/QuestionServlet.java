@@ -36,7 +36,7 @@ public class QuestionServlet extends BaseServlet {
 	@Override
 	protected void other(HttpServletRequest req, HttpServletResponse resp) {
 		String action = req.getParameter("action");
-		if("questionType".equals(action)){
+		if("listQuestionType".equals(action)){
 			questionTypeList(req,resp);
 		}else if("getQuestionQty".equals(action)){
 			getQuestionQty(req,resp);
@@ -296,8 +296,8 @@ public class QuestionServlet extends BaseServlet {
 			out = resp.getWriter();
 			String where = req.getParameter("where");
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");	
-			String path = req.getRealPath("admin/");
-			String excel = String.format("upload/试题导出列表%s.xls", formatter.format(Calendar.getInstance().getTime()));
+			String path = req.getRealPath("admin/upload/");
+			String excel = String.format("试题导出列表%s.xls", formatter.format(Calendar.getInstance().getTime()));
 			path = path+"/"+excel;			
 			path = path.replace("/", "\\");
 			File file = new File(path);

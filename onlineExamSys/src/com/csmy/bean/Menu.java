@@ -28,7 +28,8 @@ public class Menu  implements java.io.Serializable {
      //业务逻辑需要添加:用于做授权控制
      private boolean checked;
 
-    // Constructors
+    
+     private List<Integer> buttonIds;
 
     /** default constructor */
     public Menu() {
@@ -135,13 +136,13 @@ public class Menu  implements java.io.Serializable {
 	public void setChecked(boolean checked) {
 		this.checked = checked;
 	}
-   
 
+	public List<Integer> getButtonIds() {
+		return buttonIds;
+	}
 
-
-
-
-
-
+	public void setButtonIds(List<Integer> buttonIds) {
+		this.buttonIds = buttonIds;
+	}
 
 }

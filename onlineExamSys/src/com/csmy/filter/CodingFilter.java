@@ -12,9 +12,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.csmy.bean.User;
+import com.csmy.service.RoleService;
+import com.csmy.utils.Utils;
+
 @WebFilter("*.do")
 public class CodingFilter implements Filter {
-
+	RoleService roleService = new RoleService();
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -29,8 +33,27 @@ public class CodingFilter implements Filter {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("utf-8");
-		chain.doFilter(request, response);
-
+		
+		User user = Utils.getCurrentUser(request);
+		String action = request.getParameter("action");
+		boolean isAuthorized = false;
+		if("login".equals(action)){
+			isAuthorized = true;
+		}else if(user==null){
+			isAuthorized = false;
+		}else if(action!=null && action.length()>0){
+			String url = request.getServletPath();
+			int s = url.lastIndexOf('/');
+			int e = url.lastIndexOf("Servlet.do");
+			String menu = url.substring(s+1, e) + ".html";
+			isAuthorized = roleService.isAuthorize(user.getRoleId(),menu, action);
+		}
+		if(isAuthorized){
+			chain.doFilter(request, response);
+		}else{
+			response.getWriter().println("{\"success\":false,\"msg\":\"无权访问\"}");
+			response.getWriter().close();			
+		}
 	}
 
 	@Override

@@ -117,7 +117,7 @@
                         url: modurl,
                         onSubmit: function (param) {
                             $('#ui_teacher_setrole_btn').linkbutton('disable');    //点击就禁用按钮，防止连击
-                            param.action = 'setRole';
+                            param.action = 'setrole';
                         },
                         success: function (data) {
                             var dataJson = JSON.parse(data);    //转成json格式
