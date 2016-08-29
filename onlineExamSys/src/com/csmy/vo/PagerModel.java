@@ -5,6 +5,7 @@ import java.util.List;
 public class PagerModel<E> {
 	private int total;
 	private List<E> rows;	
+	private List<E> footer;
 	
 	public PagerModel(int total, List<E> rows){
 		this.total = total;
@@ -21,5 +22,11 @@ public class PagerModel<E> {
 	}
 	public void setRows(List<E> rows) {
 		this.rows = rows;
+	}
+	public List<E> getFooter() {
+		return footer;
+	}
+	public void setFooter(List<E> footer) {
+		this.footer = footer;
 	}
 }

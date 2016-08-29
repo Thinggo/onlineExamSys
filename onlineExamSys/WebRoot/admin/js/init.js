@@ -13,25 +13,22 @@ function initLogin() {
             }
         }
     });
-/*
+
     $.ajax({
-        url: "teacherServlet.do",
+        url: "loginServlet.do",
         type: "post",
         data: { action: "getuser" },
         dataType: "json",
-        success: function (result) {
-            if (result.success) {
-                var user = JSON.parse(result.msg);
-                $("#div_welcome").html("当前登录用户：" + user.userName);
+        success: function (user) {
+        	
+            if (user && user.name) {
+            	 $("#div_welcome").html("当前登录用户：" + user.name + "["+user.deptName+"]");              
             }
-            else {
-                //直接访问index页面没有cookie不会发这个ajax请求的，而是被FormsAuthentication带到了登录页面了
-                //这个else是有cookie，但是cookie里的用户再次验证的时候发现数据库里的当前用户已经修改密码/设置不可用等，然后干掉了cookie
-                window.location.href = "login.html";
+            else {            	
+            	window.location.href = "login.html";  
             }
         }
     });
-*/    
 }
 
 function addTab(subtitle, url, icon) {
@@ -159,7 +156,7 @@ function loginOut() {
     if (confirm("确定退出当前陆登账户？")) {
         var para = { "action": "logout" };
         $.ajax({
-            url: "teacherServlet.do",
+            url: "loginServlet.do",
             type: "post",
             data: para,
             dataType: "json",

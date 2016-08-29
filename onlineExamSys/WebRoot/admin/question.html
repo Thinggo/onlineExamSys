@@ -95,7 +95,7 @@
 	
 
 	
-    function ui_question_init_editor(){
+    function ui_question_init_editor(q){
 		$('#ui_question_course').combobox( {
 			url : 'courseServlet.do?action=list',
 			method : 'get',
@@ -106,6 +106,7 @@
 			icons : [ {
 				iconCls : 'icon-tip'
 			} ],
+			
 			/*
 			formatter : function(row) {
 				var s = '<span style="font-weight:bold">' + row.name
@@ -120,13 +121,12 @@
 					editable : false,
 					icons : [ {
 						iconCls : 'icon-tip'
-					} ]
-					/*,
-					formatter : function(r) {
-						var s = '<span style="font-weight:bold">' + r.text
-								+ '</span><br/>';
-						return s;
-					}*/
+					} ],
+					onLoadSuccess:function(node,data){
+		        		if(q.courseunitId){
+		        			$('#ui_question_course_unit').combotree('setValue',q.courseunitId);
+		        		}
+		        	}
 				});
 			}
 		});
@@ -335,8 +335,9 @@
             }],
             onLoad: function () {  
             	
-            	ui_question_init_editor();
+            	ui_question_init_editor(question);
             	var ue = UE.getEditor('ui_exam_editor');  
+            	$('#ui_question_course_unit').combobox({});
             	
             	$('#hiddenQuestionId').val(question.id);
             	$('#btn_question_question').linkbutton({iconCls:"icon-edit"});    
@@ -345,17 +346,14 @@
             		$('#ui_question_course').combobox('setValue',question.courseId);
             		$('#ui_question_questionType').combobox('setValue',question.typeId);
             		
-            		$('#ui_question_difficulty').slider("setValue",question.defficulty);
+            		$('#ui_question_difficulty').slider("setValue",question.difficulty);
             		$('#hiddenExplain').val(question.explain);
             		$('#hiddenQuestion').val(question.title);
             		ui_question_option_init(question.typeId,question);
 	            	ue.addListener("ready", function () {                    
 	                    ue.setContent(question.title);	                    
 	                    
-	          		});
-	            	if(question.courseunitId){
-            			$('#ui_question_course_unit').combotree('setValue',question.courseunitId);
-            		}
+	          		});	            	
             	}
             	
             },

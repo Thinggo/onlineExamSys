@@ -37,7 +37,7 @@ public class CodingFilter implements Filter {
 		User user = Utils.getCurrentUser(request);
 		String action = request.getParameter("action");
 		boolean isAuthorized = false;
-		if("login".equals(action)){
+		if("login".equals(action) || "getuser".equals(action) || "logout".equals(action)){
 			isAuthorized = true;
 		}else if(user==null){
 			isAuthorized = false;
