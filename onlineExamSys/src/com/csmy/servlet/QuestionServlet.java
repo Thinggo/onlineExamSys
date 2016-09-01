@@ -189,7 +189,8 @@ public class QuestionServlet extends BaseServlet {
 			String json = Utils.toJson(rm);
 			out.print(json);
 			
-		} catch (Exception e) {		
+		} catch (Exception e) {	
+			e.printStackTrace();
 			ResultModel rm = new ResultModel(1,"修改失败！");
 			String json = Utils.toJson(rm);		
 			out.print(json);
@@ -264,6 +265,7 @@ public class QuestionServlet extends BaseServlet {
 			out.print(json);
 			
 		} catch (Exception e) {		
+			e.printStackTrace();
 			ResultModel rm = new ResultModel(1,"添加失败！");
 			String json = Utils.toJson(rm);		
 			out.print(json);

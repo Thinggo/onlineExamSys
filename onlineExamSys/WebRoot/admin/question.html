@@ -93,8 +93,6 @@
         });       
     }
 	
-
-	
     function ui_question_init_editor(q){
 		$('#ui_question_course').combobox( {
 			url : 'courseServlet.do?action=list',
@@ -106,13 +104,6 @@
 			icons : [ {
 				iconCls : 'icon-tip'
 			} ],
-			
-			/*
-			formatter : function(row) {
-				var s = '<span style="font-weight:bold">' + row.name
-						+ '</span><br/>';
-				return s;
-			},*/
 			onSelect : function(row) {
 				$('#ui_question_course_unit').combotree( {
 					url : 'courseUnitServlet.do?action=list&courseId='+row.id,
@@ -141,13 +132,6 @@
 			icons : [ {
 				iconCls : 'icon-tip'
 			} ],
-			/*
-			formatter : function(row) {
-				var s = '<span style="font-weight:bold">' + row.typeName
-						+ '</span><br/>';
-				return s;
-			},
-			*/
 			onSelect : function(row) {
 				ui_question_option_init(row.typeId);				
 			}
@@ -192,7 +176,7 @@
             title: title,
             iconCls:iconcls,
             height: 560,
-            width: 820,
+            width: 850,
             modal: true,
             buttons: [{
                 id: "ui_question_editor_save_btn",
@@ -201,7 +185,7 @@
                 handler: function () {      
                 	var questionId = $('#hiddenQuestionId').val();
                 	var content = UE.getEditor('ui_exam_editor').getContent();                	
-                	saveCurrent2();
+                	ui_question_saveCurrent2();
                 	
                 	var cid = $('#ui_question_course').combobox("getValue");
                 	if(!cid){
@@ -286,6 +270,8 @@
                                 if(questionId>0){
                                 	$("#ui_question_editor_dialog").dialog('destroy');
                             		UE.getEditor('ui_exam_editor').destroy(); 
+                                }else{
+                                	ui_question_resetEditor();
                                 }
                             } else {
                                 $.show_warning("提示", data.msg);
@@ -299,7 +285,7 @@
                 text: '预览试题',
                 iconCls: "icon-search",
                 handler: function () {         
-                	saveCurrent();
+                	ui_question_saveCurrent();
                 	var question = $('#hiddenQuestion').val();                	
                 	$('#view_question_content').html("<span style='float:left;color:blue'>题干：</span><div>"+question+"</div>");
                 	
@@ -336,26 +322,33 @@
             onLoad: function () {  
             	
             	ui_question_init_editor(question);
+            	
             	var ue = UE.getEditor('ui_exam_editor');  
             	$('#ui_question_course_unit').combobox({});
             	
-            	$('#hiddenQuestionId').val(question.id);
             	$('#btn_question_question').linkbutton({iconCls:"icon-edit"});    
             	$('#ui_question_questionType').combobox('setValue',1);
             	if(question){
+            		$('#hiddenQuestionId').val(question.id);
             		$('#ui_question_course').combobox('setValue',question.courseId);
             		$('#ui_question_questionType').combobox('setValue',question.typeId);
             		
             		$('#ui_question_difficulty').slider("setValue",question.difficulty);
             		$('#hiddenExplain').val(question.explain);
-            		$('#hiddenQuestion').val(question.title);
-            		ui_question_option_init(question.typeId,question);
-	            	ue.addListener("ready", function () {                    
-	                    ue.setContent(question.title);	                    
-	                    
-	          		});	            	
-            	}
-            	
+            		$('#hiddenQuestion').val(question.title);            		
+            		ui_question_option_init(question.typeId,question);	            	          	
+            	}   
+            	ue.addListener("ready", function () {  
+            		
+            		if(question && question.title){
+                    	ue.setContent(question.title);
+            		}else{
+            			ue.setContent("请输入试题内容。。。");
+            		}                    
+            		UE.getEditor('ui_exam_editor').focus();
+            		
+          		});	
+            	$('#btn_question_question').linkbutton({iconCls:'icon-edit'});
             },
             onClose: function () {
             	$("#ui_question_editor_dialog").dialog('destroy');
@@ -465,8 +458,7 @@
 							$('#ui_export_hitting').text('导出结束，请点击文件下载！');
 							$('#ui_export_url').attr("href","downloadServlet.do?action=download&filename="+data.msg);
 							$('#ui_export_url').text(data.msg);
-							$('#ui_export_download').show();
-							
+							$('#ui_export_download').show();							
 						}else{
 							$.show_warning("提示",data.msg);
 						}
@@ -501,7 +493,6 @@
 		$("#ui_question_dg").datagrid("load", {
 			where : where
 		}).datagrid('clearSelections').datagrid('clearChecked');
-		;
 	}
 </script>
 <div id="ui_layout" class="easyui-layout"

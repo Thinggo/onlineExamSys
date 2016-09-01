@@ -40,7 +40,8 @@ public class CodingFilter implements Filter {
 		if("login".equals(action) || "getuser".equals(action) || "logout".equals(action)){
 			isAuthorized = true;
 		}else if(user==null){
-			isAuthorized = false;
+			response.sendRedirect("login.html");
+			return;
 		}else if(action!=null && action.length()>0){
 			String url = request.getServletPath();
 			int s = url.lastIndexOf('/');

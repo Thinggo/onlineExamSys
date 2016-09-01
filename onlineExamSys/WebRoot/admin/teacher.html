@@ -120,7 +120,7 @@
                             param.action = 'setrole';
                         },
                         success: function (data) {
-                            var dataJson = JSON.parse(data);    //转成json格式
+                            var dataJson = $.parseJSON(data);    //转成json格式
                             if (dataJson.success) {
                                 $("#ui_teacher_setrole_dialog").dialog('destroy');  //销毁dialog对象
                                 $.show_warning("提示", "角色设置成功！");
@@ -159,7 +159,7 @@
         var whereStr = "1=1";
         var no = $('#ui_teacher_search').find('[name=ui_teacher_no]').val();
         var name =  $('#ui_teacher_search').find('[name=ui_teacher_name]').val();       
-        var deptId = $('#ui_student_dept_search').combotree("getValue");
+        var deptId = $('#ui_teacher_dept_search').combotree("getValue");
         var stime = $('#ui_teacher_regtime_start').datebox('getValue');
         var etime = $('#ui_teacher_regtime_end').datebox('getValue');
         if (no != "") {

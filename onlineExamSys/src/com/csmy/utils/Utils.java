@@ -23,13 +23,14 @@ public class Utils {
 	private final static String CURRENT_USER_KEY="ONLINE_EXAM_CURRENT_USER_KEY";
 	public static User getCurrentUser(HttpServletRequest request){
 		User user = (User) request.getSession().getAttribute(CURRENT_USER_KEY);
-//		if(user==null){
+		if(user==null){
 //			user = new Teacher();
 //			user.setId(1);
 //			user.setName("刘勇");
+//			user.setDeptName("软件学院");
 //			user.setDeptId(1);
 //			user.setRoleId(1);
-//		}
+		}
 		return user;
 	}
 	
