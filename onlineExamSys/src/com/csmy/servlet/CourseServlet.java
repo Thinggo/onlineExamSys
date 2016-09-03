@@ -56,7 +56,7 @@ public class CourseServlet extends BaseServlet {
 		try {				
 			out = resp.getWriter();
 			User user = Utils.getCurrentUser(req);
-			list = courseService.list(user.getDeptId());
+			list = courseService.list(user.getId());
 			String json = Utils.toJson(list);
 			out.println(json);
 		} catch (Exception e) {			

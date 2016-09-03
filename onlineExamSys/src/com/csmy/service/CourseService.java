@@ -27,7 +27,7 @@ public class CourseService {
 	}
 	
 	public List<Course> list(int uid) throws Exception{
-		return courseDao.select("1=1");
+		return courseDao.select("teacherid="+uid);
 	}
 	
 	

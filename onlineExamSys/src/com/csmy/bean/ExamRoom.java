@@ -15,6 +15,7 @@ public class ExamRoom  implements java.io.Serializable {
      private Integer no;
      private String roomAddr;
      private String roomIp;
+     private int capacity;
 
 
     // Constructors
@@ -71,6 +72,14 @@ public class ExamRoom  implements java.io.Serializable {
     public void setRoomIp(String roomIp) {
         this.roomIp = roomIp;
     }
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
    
 
 

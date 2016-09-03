@@ -281,7 +281,25 @@ public class QuestionServlet extends BaseServlet {
 			out = resp.getWriter();
 			PagerModel2 pm2 = Utils.formToBean(req, PagerModel2.class);
 			User user = Utils.getCurrentUser(req);
-			pm = questionService.search(user.getId(),pm2.getSort()+" "+pm2.getOrder(), pm2.getPageSize(), pm2.getPageIndex(), pm2.getWhere());
+			String courseId = req.getParameter("courseId");
+			String courseunitId = req.getParameter("courseunitId");
+			String typeId = req.getParameter("typeId");
+			String title = req.getParameter("courseId");
+			String where = "1=1";
+			if(courseId!=null){
+				where += " and courseId="+Integer.parseInt(courseId);
+			}
+			if(courseunitId!=null){
+				where += " and courseunitId="+Integer.parseInt(courseunitId);
+			}
+			if(typeId!=null){
+				where += " and typeId="+Integer.parseInt(typeId);
+			}
+			if(title!=null){
+				title = Utils.filterString(title);
+				where += " and title LIKE '%"+title +"%'";
+			}
+			pm = questionService.search(user.getId(),pm2.getSort()+" "+pm2.getOrder(), pm2.getPageSize(), pm2.getPageIndex(), where);
 			String json = Utils.toJson(pm);
 			out.println(json);
 		} catch (Exception e) {			

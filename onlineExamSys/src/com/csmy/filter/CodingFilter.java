@@ -31,25 +31,34 @@ public class CodingFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest)req;
 		HttpServletResponse response = (HttpServletResponse)resp;
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/plain");
-		response.setCharacterEncoding("utf-8");
 		
+		response.setCharacterEncoding("utf-8");
+		String url = request.getServletPath();
 		User user = Utils.getCurrentUser(request);
 		String action = request.getParameter("action");
 		boolean isAuthorized = false;
-		if("login".equals(action) || "getuser".equals(action) || "logout".equals(action)){
+		if("getuser".equals(action) || "login".equals(action) ||  "logout".equals(action)){
 			isAuthorized = true;
 		}else if(user==null){
+			response.setContentType("text/html");
 			response.sendRedirect("login.html");
 			return;
+		}else if ("listSysMenu".equals(action)) {
+			isAuthorized = true;
 		}else if(action!=null && action.length()>0){
-			String url = request.getServletPath();
+			
 			int s = url.lastIndexOf('/');
 			int e = url.lastIndexOf("Servlet.do");
-			String menu = url.substring(s+1, e) + ".html";
-			isAuthorized = roleService.isAuthorize(user.getRoleId(),menu, action);
+			String menu = url.substring(s+1, e);
+			if("exam".equals(menu)){
+				isAuthorized = true;
+			}else{
+				menu = menu + ".html";
+				isAuthorized = roleService.isAuthorize(user.getRoleId(),menu, action);
+			}
 		}
 		if(isAuthorized){
+			response.setContentType("text/plain");
 			chain.doFilter(request, response);
 		}else{
 			response.getWriter().println("{\"success\":false,\"msg\":\"无权访问\"}");

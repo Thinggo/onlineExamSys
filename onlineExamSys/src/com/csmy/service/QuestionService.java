@@ -39,7 +39,8 @@ public class QuestionService {
 
 	public PagerModel<Question> search(Integer uid, String order, int pageSize, int pageIndex, String where)
 			throws Exception {
-
+		if(where==null || where.length()==0) where ="1=1";
+		where = where + " and teacherid=" + uid;		
 		return questionDao.list(uid, order, pageSize, pageIndex, where);
 	}
 
